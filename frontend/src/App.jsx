@@ -7,6 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card.jsx";
 import { Input } from "@/components/ui/input.jsx";
+import { createUser } from "./lib/api/users";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert.jsx";
 import {
   Heart,
   Calendar,
@@ -151,50 +153,76 @@ function App() {
   );
 
   // Componente de Cadastro
-  const RegisterView = () => (
-    <div className="min-h-screen bg-gradient-to-b from-red-400 to-orange-400 flex flex-col items-center justify-center p-4">
-      <div className="bg-red-50 rounded-lg p-8 w-full max-w-md">
-        <div className="flex items-center mb-6">
-          <Button
-            variant="ghost"
-            onClick={() => setCurrentView("login")}
-            className="p-2"
-          >
-            ←
-          </Button>
-          <h2 className="text-xl font-bold text-center flex-1">Cadastro</h2>
-        </div>
+  const RegisterView = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [phone, setPhone] = useState("");
+    const [role, setRole] = useState("Apoiador");
+    const [submitting, setSubmitting] = useState(false);
+    const [message, setMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
-        <div className="space-y-4">
-          <Input placeholder="Nome" className="bg-gray-200 border-none" />
-          <Input
-            placeholder="Senha"
-            type="password"
-            className="bg-gray-200 border-none"
-          />
-          <Input placeholder="Telefone" className="bg-gray-200 border-none" />
-          <Input placeholder="E-mail" className="bg-gray-200 border-none" />
+    const handleSubmit = async () => {
+      setSubmitting(true);
+      setMessage("");
+      setIsError(false);
+      try {
+        const data = await createUser({ name, email, password, phone, role });
+        setMessage(`User created: ${data.id}`);
+        setIsError(false);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setPhone("");
+        setRole("Apoiador");
+      } catch (err) {
+        setMessage(`Error: ${err.message}`);
+        setIsError(true);
+      } finally {
+        setSubmitting(false);
+      }
+    };
 
-          <select className="w-full p-3 bg-gray-200 rounded-lg border-none">
-            <option>Apoiador</option>
-            <option>Voluntário</option>
-            <option>Paciente</option>
-          </select>
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-red-400 to-orange-400 flex flex-col items-center justify-center p-4">
+        <div className="bg-red-50 rounded-lg p-8 w-full max-w-md">
+          <div className="flex items-center mb-6">
+            <Button
+              variant="ghost"
+              onClick={() => setCurrentView("login")}
+              className="p-2"
+            >
+              ←
+            </Button>
+            <h2 className="text-xl font-bold text-center flex-1">Cadastro</h2>
+          </div>
 
-          <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-            + Cadastre-se
-          </Button>
+          <div className="space-y-4">
+            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" className="bg-gray-200 border-none" />
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail" className="bg-gray-200 border-none" />
+            <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" type="password" className="bg-gray-200 border-none" />
+            <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Telefone" className="bg-gray-200 border-none" />
+            <select value={role} onChange={(e) => setRole(e.target.value)} className="w-full p-3 bg-gray-200 rounded-lg border-none">
+              <option value="Apoiador">Apoiador</option>
+              <option value="Voluntário">Voluntário</option>
+              <option value="Paciente">Paciente</option>
+            </select>
+            <Button disabled={submitting} onClick={handleSubmit} className="w-full bg-orange-500 hover:bg-orange-600 text-white">
+              {submitting ? "Enviando..." : "+ Cadastre-se"}
+            </Button>
 
-          <Button
-            variant="outline"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white border-blue-500"
-          >
-            G Logar com o Google
-          </Button>
+            {message && (
+              <Alert variant={isError ? "destructive" : undefined}>
+                <AlertTitle>{isError ? "Error" : "Success"}</AlertTitle>
+                <AlertDescription>{message}</AlertDescription>
+              </Alert>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Componente do Dashboard
   const DashboardView = () => {
