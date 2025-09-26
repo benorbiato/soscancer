@@ -1,0 +1,12 @@
+{
+  "title": "Novo cadastro",
+  "subtitle": "Informe seus dados abaixo para criar a sua conta",
+  "register": {
+    "usernameLabel": "Nome completo",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "exemplo@email.com",
+    "passwordLabel": "Senha"
+  },
+  "signUp": "Criar cadastro",
+  "loginWithGoogle": "Criar cadastro com Google"
+}
