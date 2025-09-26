@@ -54,11 +54,18 @@ class UserService:
         return UserPublic(**user.model_dump()) if user else None
 
     def create_user(self, payload: UserCreate) -> UserPublic:
+        email_normalized = payload.email.lower()
+        for existing_user in self._users.values():
+            if existing_user.email.lower() == email_normalized:
+                raise ValueError("email_already_exists")
+
         user_id = uuid4()
         user_in_db = UserInDB(
             id=user_id,
             name=payload.name,
             email=payload.email,
+            phone=payload.phone,
+            role=payload.role,
             hashed_password=_hash_password(payload.password),
         )
         self._users[user_id] = user_in_db
@@ -74,6 +81,10 @@ class UserService:
             existing.name = update_data["name"]
         if "password" in update_data and update_data["password"] is not None:
             existing.hashed_password = _hash_password(update_data["password"])
+        if "phone" in update_data:
+            existing.phone = update_data["phone"]
+        if "role" in update_data:
+            existing.role = update_data["role"]
         self._users[user_id] = existing
         self._persist()
         return UserPublic(**existing.model_dump())

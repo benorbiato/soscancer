@@ -17,7 +17,12 @@ def list_users() -> List[UserSummary]:
 
 @router.post("/", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def create_user(payload: UserCreate) -> UserPublic:
-    return user_service.create_user(payload)
+    try:
+        return user_service.create_user(payload)
+    except ValueError as exc:
+        if str(exc) == "email_already_exists":
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already exists")
+        raise
 
 
 @router.get("/{user_id}", response_model=UserPublic)
