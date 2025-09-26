@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { registryNs } from '../i18n'
+import { registry } from '@/common/locales'
 
 import {
   Card,
@@ -9,10 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { RegisterForm } from './form/form'
+import { RegisterForm } from './form'
 
 export function RegisterCard() {
-  const { t } = useTranslation(registryNs)
+  const { t } = useTranslation(registry)
 
   return (
     <Card className="w-full max-w-sm">

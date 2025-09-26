@@ -1,40 +1,13 @@
-import { Link, NavLink, Outlet } from 'react-router-dom'
-import { useTheme } from 'next-themes'
-import { Switch } from '@/components/ui/switch.jsx'
+import { Outlet } from 'react-router-dom'
+import { ThemeToggle } from '@/common/hooks/theme-toogle'
+import { Header } from '@/common/components/header/header'
 
 export default function AppLayout() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = ThemeToggle()
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-gradient-to-r from-red-400 to-orange-400 text-white">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="font-semibold tracking-wide">
-            soscancer
-          </Link>
-          <nav className="flex items-center gap-4 text-sm">
-            <NavLink
-              to="/"
-              className={({ isActive }) => `hover:underline ${isActive ? 'font-semibold' : ''}`}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/register"
-              className={({ isActive }) => `hover:underline ${isActive ? 'font-semibold' : ''}`}
-            >
-              Register
-            </NavLink>
-            <div className="flex items-center gap-2">
-              <span className="text-xs opacity-90">Dark</span>
-              <Switch
-                checked={theme === 'dark'}
-                onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-              />
-            </div>
-          </nav>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors">
+      <Header theme={theme} setTheme={setTheme} />
 
       <main className="flex-1">
         <div className="max-w-5xl mx-auto px-4 py-6">
@@ -42,8 +15,8 @@ export default function AppLayout() {
         </div>
       </main>
 
-      <footer className="border-t bg-white">
-        <div className="max-w-5xl mx-auto px-4 py-4 text-xs text-gray-600">
+      <footer className="border-t bg-white dark:bg-gray-900 dark:text-gray-300 transition-colors">
+        <div className="max-w-5xl mx-auto px-4 py-4 text-xs">
           © {new Date().getFullYear()} soscancer
         </div>
       </footer>

@@ -28,9 +28,10 @@ const resources = {
   },
   pt: {
     translation: {
-      appTitle: 'GRUPO PONGAIENSE DE COMBATE AO CÂNCER',
+      appTitle: 'Grupo Pongaiense de Combate ao Câncer',
       appSubtitle: 'Faça parte e saiba como ajudar',
-      login: 'Login',
+      loginTitle: 'Faça login na sua conta.',
+      loginSubtitle: 'Seja bem-vindo de volta',
       register: 'Cadastro',
       loginWithGoogle: 'Logar com o Google',
       username: 'usuário',

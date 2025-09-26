@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { useTranslation } from 'react-i18next'
-import { registryNs } from '../../i18n'
+import { registry } from '@/common/locales'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,26 +18,15 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-
-// schema de validação com zod
 const formSchema = z.object({
   username: z.string().min(2, {
     message: 'Username must be at least 2 characters.',
   }),
 })
 
-export function RegisterForm() {
-  const { t } = useTranslation(registryNs)
+function RegisterForm() {
+  const { t } = useTranslation(registry)
 
-  // inicializa o react-hook-form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,14 +34,13 @@ export function RegisterForm() {
     },
   })
 
-  // função de submit
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values) // aqui você pode chamar API, etc.
+    console.log(values)
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="username"
@@ -87,7 +75,9 @@ export function RegisterForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('register.passwordLabel')}</FormLabel>
-              <FormMessage />
+              <FormControl>
+                <Input placeholder={t('register.emailPlaceholder')} {...field} />
+              </FormControl>
             </FormItem>
           )}
         />
@@ -103,3 +93,5 @@ export function RegisterForm() {
     </Form>
   )
 }
+
+export { RegisterForm }

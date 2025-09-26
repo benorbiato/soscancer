@@ -1,0 +1,14 @@
+{
+  "title": "Faça login na sua conta.",
+  "subtitle": "Seja bem-vindo de volta",
+  "loginWithMedias": "Ou continue com:",
+  "loginWithEmail": "Ou continue com seu email e senha",
+  "email": "Digite seu email",
+  "password": "Digite sua senha",
+  "continueLogin": "Fazer login",
+
+  "goToSignUp": {
+    "text": "Ainda não tem conta?",
+    "link": "Registre-se"
+  }
+}

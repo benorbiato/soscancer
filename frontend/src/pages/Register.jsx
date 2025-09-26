@@ -34,5 +34,11 @@ export default function RegisterPage() {
     }
   }
 
-  return <RegisterCard />
+  return (
+    <div className="flex h-screen items-center justify-center overflow-hidden">
+      <div className="w-full max-w-md text-center">
+        <RegisterCard />
+      </div>
+    </div>
+  )
 }
