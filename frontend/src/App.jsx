@@ -7,7 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card.jsx";
 import { Input } from "@/components/ui/input.jsx";
-import { API_BASE_URL } from "./lib/utils";
+import { createUser } from "./lib/api/users";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert.jsx";
 import {
   Heart,
   Calendar,
@@ -160,22 +161,16 @@ function App() {
     const [role, setRole] = useState("Apoiador");
     const [submitting, setSubmitting] = useState(false);
     const [message, setMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
     const handleSubmit = async () => {
       setSubmitting(true);
       setMessage("");
+      setIsError(false);
       try {
-        const resp = await fetch(`${API_BASE_URL}/api/v1/users/`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, phone, role }),
-        });
-        if (!resp.ok) {
-          const text = await resp.text();
-          throw new Error(text || `Request failed: ${resp.status}`);
-        }
-        const data = await resp.json();
+        const data = await createUser({ name, email, password, phone, role });
         setMessage(`User created: ${data.id}`);
+        setIsError(false);
         setName("");
         setEmail("");
         setPassword("");
@@ -183,6 +178,7 @@ function App() {
         setRole("Apoiador");
       } catch (err) {
         setMessage(`Error: ${err.message}`);
+        setIsError(true);
       } finally {
         setSubmitting(false);
       }
@@ -217,9 +213,10 @@ function App() {
             </Button>
 
             {message && (
-              <div className="text-sm text-center mt-2 {message.startsWith('Error') ? 'text-red-600' : 'text-green-600'}">
-                {message}
-              </div>
+              <Alert variant={isError ? "destructive" : undefined}>
+                <AlertTitle>{isError ? "Error" : "Success"}</AlertTitle>
+                <AlertDescription>{message}</AlertDescription>
+              </Alert>
             )}
           </div>
         </div>

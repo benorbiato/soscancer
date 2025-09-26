@@ -30,5 +30,8 @@ npm run preview
 
 ### API Base URL
 
-The frontend expects the backend at `http://localhost:8000` by default. Adjust fetch calls or environment configuration as needed.
+The frontend expects the backend at `http://localhost:8000` by default. To change it, create a `.env` file with:
+```
+VITE_API_BASE_URL=http://localhost:8000
+```
 

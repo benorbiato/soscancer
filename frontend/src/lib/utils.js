@@ -5,4 +5,4 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+// API_BASE_URL moved to src/lib/api/client.js
