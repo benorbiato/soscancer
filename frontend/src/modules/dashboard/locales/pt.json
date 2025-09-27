@@ -40,7 +40,9 @@
     "pixTitle": "PIX",
     "copy": "Copiar",
     "description": "Sua contribuição faz toda a diferença na vida de quem precisa de apoio.",
-    "donateNow": "Doar Agora"
+    "donateNow": "Doar Agora",
+    "copySuccess": "PIX copiado com sucesso!",
+    "copyError": "Erro ao copiar PIX. Tente novamente."
   },
   "balance": {
     "title": "Resumo Financeiro",

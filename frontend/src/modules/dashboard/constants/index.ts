@@ -135,7 +135,7 @@ export const DASHBOARD_CONSTANTS = {
       title: 'Próximos Eventos',
       description: 'Veja nossa agenda',
       icon: 'Calendar',
-      url: '/events',
+      url: '/agenda',
       variant: 'outline' as const,
     },
     {

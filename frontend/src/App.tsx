@@ -1,7 +1,7 @@
 import '../app/global.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/auth-context'
-import { ToastProvider } from './components/ui/toast.jsx'
+import { Toaster } from 'sonner'
 import { HomeView, LoginView, RegisterView, DashboardView, AboutView } from './pages'
 import Settings from './modules/settings'
 import Agenda from './pages/agenda'
@@ -45,7 +45,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
-        <ToastProvider />
+        <Toaster richColors position="top-right" />
       </Router>
     </AuthProvider>
   )

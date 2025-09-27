@@ -4,16 +4,22 @@ import { dashboard } from '@/common/locales'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { QrCode, Heart, ExternalLink } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
 
 function DonationQR() {
   const { t } = useTranslation(dashboard)
+  const toast = useToast()
 
   // QR Code placeholder - em produção, você usaria uma biblioteca como qrcode.js
   const qrCodeData = 'https://pix.soscancer.org.br/doar'
 
-  const handleCopyPix = () => {
-    navigator.clipboard.writeText('pix@soscancer.org.br')
-    // Aqui você poderia adicionar um toast de confirmação
+  const handleCopyPix = async () => {
+    try {
+      await navigator.clipboard.writeText('pix@soscancer.org.br')
+      toast.success(t('donation.copySuccess'))
+    } catch (error) {
+      toast.error(t('donation.copyError'))
+    }
   }
 
   return (
@@ -34,7 +40,6 @@ function DonationQR() {
             <p className="text-xs text-muted-foreground mt-2 text-center">{t('donation.scanQR')}</p>
           </div>
 
-          {/* Informações de doação */}
           <div className="flex-1 space-y-4">
             <div>
               <h3 className="font-semibold text-foreground mb-2">{t('donation.pixTitle')}</h3>
@@ -48,12 +53,7 @@ function DonationQR() {
 
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">{t('donation.description')}</p>
-              <Button className="w-full" asChild>
-                <a href={qrCodeData} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  {t('donation.donateNow')}
-                </a>
-              </Button>
+              
             </div>
           </div>
         </div>

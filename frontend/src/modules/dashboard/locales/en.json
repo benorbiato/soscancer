@@ -40,7 +40,9 @@
     "pixTitle": "PIX",
     "copy": "Copy",
     "description": "Your contribution makes all the difference in the lives of those who need support.",
-    "donateNow": "Donate Now"
+    "donateNow": "Donate Now",
+    "copySuccess": "PIX copied successfully!",
+    "copyError": "Error copying PIX. Please try again."
   },
   "balance": {
     "title": "Financial Summary",
