@@ -5,6 +5,7 @@ import { Toaster } from 'sonner'
 import { HomeView, LoginView, RegisterView, DashboardView, AboutView } from './pages'
 import Settings from './modules/settings'
 import Agenda from './pages/agenda'
+import Admin from './modules/admin'
 import { ProtectedRoute } from './components/protected-route'
 import { Permission } from './lib/permissions'
 
@@ -39,6 +40,14 @@ function App() {
               element={
                 <ProtectedRoute requiredPermission={Permission.VIEW_AGENDA}>
                   <Agenda />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/*"
+              element={
+                <ProtectedRoute requiredPermission={Permission.ADMIN_ACCESS}>
+                  <Admin />
                 </ProtectedRoute>
               }
             />

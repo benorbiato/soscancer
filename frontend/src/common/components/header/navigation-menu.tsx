@@ -30,6 +30,16 @@ export function NavigationMenu({ className = '', onLinkClick }: NavigationMenuPr
           Configurações
         </Link>
       </PermissionGuard>
+
+      <PermissionGuard permission={Permission.ADMIN_ACCESS}>
+        <Link
+          to="/admin"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          onClick={onLinkClick}
+        >
+          Gerenciamento
+        </Link>
+      </PermissionGuard>
     </nav>
   )
 }

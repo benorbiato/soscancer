@@ -21,7 +21,6 @@ export class UsersService {
     try {
       const data = fs.readFileSync(USERS_DB_PATH, 'utf8');
       const rawUsers = JSON.parse(data).users || [];
-      // Convert snake_case to camelCase for hashedPassword field
       this.users = rawUsers.map((user: any) => ({
         ...user,
         hashedPassword: user.hashed_password || user.hashedPassword,

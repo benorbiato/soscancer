@@ -58,6 +58,16 @@ export function MobileMenu({ isOpen, user, onClose, onLogout }: MobileMenuProps)
               Configurações
             </Link>
           </PermissionGuard>
+
+          <PermissionGuard permission={Permission.ADMIN_ACCESS}>
+            <Link
+              to="/admin"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+              onClick={onClose}
+            >
+              Gerenciamento
+            </Link>
+          </PermissionGuard>
         </nav>
 
         <div className="pt-3 border-t border-border/50">
