@@ -1,110 +1,119 @@
-# SOS Cancer Backend - NestJS
+# SOS Cancer Backend
 
-Backend API para a plataforma SOS Cancer construído com NestJS, TypeScript e MongoDB.
+NestJS backend API for the SOS Cancer platform with TypeScript and comprehensive authentication system.
 
-## 🚀 Tecnologias
+## Technologies
 
-- **NestJS** - Framework Node.js progressivo
-- **TypeScript** - Superset tipado do JavaScript
-- **MongoDB** - Banco de dados NoSQL
-- **JWT** - Autenticação baseada em tokens
-- **Swagger** - Documentação da API
-- **Class Validator** - Validação de dados
-- **Passport** - Estratégias de autenticação
+- **NestJS** - Progressive Node.js framework
+- **TypeScript** - Typed JavaScript superset
+- **JWT** - Token-based authentication
+- **Swagger** - API documentation
+- **Class Validator** - Data validation
+- **Passport** - Authentication strategies
+- **bcrypt** - Password hashing
 
-## 📁 Estrutura do Projeto
+## Project Structure
 
 ```
 src/
-├── auth/                 # Módulo de autenticação
+├── auth/                 # Authentication module
 │   ├── auth.controller.ts
 │   ├── auth.service.ts
 │   ├── auth.module.ts
-│   ├── guards/           # Guards de autenticação
-│   └── strategies/       # Estratégias do Passport
-├── users/                # Módulo de usuários
+│   ├── guards/           # Authentication guards
+│   └── strategies/       # Passport strategies
+├── users/                # User management module
 │   ├── users.controller.ts
 │   ├── users.service.ts
-│   ├── users.module.ts
-│   └── schemas/          # Schemas do MongoDB
-├── agenda/               # Módulo da agenda
+│   └── users.module.ts
+├── agenda/               # Events/agenda module
 │   ├── agenda.controller.ts
 │   └── agenda.module.ts
-├── health/               # Módulo de health check
+├── health/               # Health check module
 │   ├── health.controller.ts
 │   └── health.module.ts
-├── common/               # Código compartilhado
-│   ├── decorators/       # Decorators customizados
+├── common/               # Shared code
+│   ├── decorators/       # Custom decorators
 │   ├── dto/             # Data Transfer Objects
 │   ├── enums/           # Enums
-│   ├── guards/          # Guards de autorização
-│   ├── interfaces/      # Interfaces TypeScript
-│   └── utils/           # Utilitários
-├── app.module.ts        # Módulo principal
-├── app.controller.ts    # Controller principal
-├── app.service.ts       # Service principal
-└── main.ts             # Arquivo de entrada
+│   ├── guards/          # Authorization guards
+│   ├── interfaces/      # TypeScript interfaces
+│   └── utils/           # Utilities
+├── app.module.ts        # Main module
+├── app.controller.ts    # Main controller
+├── app.service.ts       # Main service
+└── main.ts             # Entry point
 ```
 
-## 🛠️ Instalação
+## Installation
 
-1. **Instalar dependências:**
+1. **Install dependencies:**
 ```bash
 npm install
 ```
 
-2. **Configurar variáveis de ambiente:**
+2. **Set up environment variables:**
 ```bash
 cp env.example .env
 ```
 
-3. **Configurar o arquivo .env:**
+3. **Configure .env file:**
 ```env
 NODE_ENV=development
-PORT=8000
+PORT=3000
 JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
-JWT_EXPIRES_IN=30m
-JWT_REFRESH_EXPIRES_IN=7d
-BCRYPT_ROUNDS=12
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://localhost:5174
+JWT_EXPIRES_IN=7d
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX_REQUESTS=60
 ```
 
-## 🚀 Execução
+## Running the Application
 
-### Desenvolvimento
+### Development
 ```bash
 npm run start:dev
 ```
 
-### Produção
+### Production
 ```bash
 npm run build
 npm run start:prod
 ```
 
-## 📚 Documentação da API
+### Other Commands
+```bash
+npm run start          # Start application
+npm run start:debug    # Start in debug mode
+npm run lint           # Run linter
+npm run format         # Format code
+npm run test           # Run unit tests
+npm run test:e2e       # Run e2e tests
+npm run test:cov       # Run tests with coverage
+```
 
-Acesse a documentação Swagger em: `http://localhost:8000/docs`
+## API Documentation
 
-## 🔐 Autenticação
+Access Swagger documentation at: `http://localhost:3000/docs`
 
-O sistema utiliza JWT (JSON Web Tokens) para autenticação:
+## Authentication
 
-- **Access Token**: Válido por 30 minutos
-- **Refresh Token**: Válido por 7 dias
-- **Bearer Token**: Formato `Authorization: Bearer <token>`
+The system uses JWT (JSON Web Tokens) for authentication:
 
-## 👥 Sistema de Permissões
+- **Access Token**: Valid for 7 days
+- **Bearer Token**: Format `Authorization: Bearer <token>`
 
-### Roles (Funções)
-- **ADMIN**: Acesso total ao sistema
-- **VOLUNTEER**: Acesso à agenda e dashboard
-- **PATIENT**: Visualização de agenda e perfil
-- **SPONSOR**: Acesso à agenda e dashboard
-- **SUPPORTER**: Acesso limitado
-- **USER**: Acesso básico
+## User Roles and Permissions
 
-### Permissões
+### Roles
+- **ADMIN**: Full system access
+- **VOLUNTEER**: Access to agenda and dashboard
+- **PATIENT**: View agenda and profile
+- **SPONSOR**: Access to agenda and dashboard
+- **SUPPORTER**: Limited access
+- **USER**: Basic access
+
+### Permissions
 - `VIEW_USERS`, `CREATE_USERS`, `UPDATE_USERS`, `DELETE_USERS`
 - `VIEW_AGENDA`, `CREATE_EVENTS`, `UPDATE_EVENTS`, `DELETE_EVENTS`
 - `VIEW_DASHBOARD`, `VIEW_ANALYTICS`
@@ -112,64 +121,65 @@ O sistema utiliza JWT (JSON Web Tokens) para autenticação:
 - `VIEW_REGISTRY`, `MANAGE_REGISTRY`
 - `ADMIN_ACCESS`, `SYSTEM_SETTINGS`
 
-## 🛡️ Segurança
+## Security Features
 
-- **Helmet**: Headers de segurança
-- **CORS**: Configuração de origens permitidas
-- **Rate Limiting**: Limite de requisições
-- **Validation**: Validação de dados de entrada
-- **Password Hashing**: Bcrypt para senhas
+- **Helmet**: Security headers
+- **CORS**: Configured allowed origins
+- **Rate Limiting**: Request rate limiting
+- **Validation**: Input data validation
+- **Password Hashing**: bcrypt for passwords
 
-## 🧪 Testes
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NODE_ENV` | Execution environment | `development` |
+| `PORT` | Server port | `3000` |
+| `JWT_SECRET` | JWT secret key | Required |
+| `JWT_EXPIRES_IN` | Token expiration | `7d` |
+| `ALLOWED_ORIGINS` | CORS allowed origins | Required |
+| `RATE_LIMIT_WINDOW_MS` | Rate limit window | `60000` |
+| `RATE_LIMIT_MAX_REQUESTS` | Max requests per window | `60` |
+
+## API Endpoints
+
+### Authentication
+- `POST /api/v1/auth/login` - User login
+- `POST /api/v1/auth/register` - User registration
+- `POST /api/v1/auth/refresh` - Refresh token
+- `GET /api/v1/auth/profile` - Get user profile
+- `PATCH /api/v1/auth/profile` - Update user profile
+
+### Users
+- `GET /api/v1/users` - List users
+- `POST /api/v1/users` - Create user
+- `GET /api/v1/users/:id` - Get user by ID
+- `PATCH /api/v1/users/:id` - Update user
+- `DELETE /api/v1/users/:id` - Delete user
+
+### Health
+- `GET /api/v1/health` - Health check
+
+## Development
+
+The backend uses NestJS with TypeScript. Key features:
+
+- Modular architecture
+- Dependency injection
+- Guards and interceptors
+- Validation pipes
+- Exception filters
+- Swagger documentation
+
+## Testing
 
 ```bash
-# Testes unitários
+# Unit tests
 npm run test
 
-# Testes e2e
+# E2E tests
 npm run test:e2e
 
-# Cobertura de testes
+# Test coverage
 npm run test:cov
 ```
-
-## 📝 Scripts Disponíveis
-
-- `npm run build` - Compilar o projeto
-- `npm run start` - Executar em produção
-- `npm run start:dev` - Executar em desenvolvimento
-- `npm run start:debug` - Executar em modo debug
-- `npm run lint` - Executar linter
-- `npm run format` - Formatar código
-
-## 🔧 Configuração
-
-### Variáveis de Ambiente
-
-| Variável | Descrição | Padrão |
-|----------|-----------|---------|
-| `NODE_ENV` | Ambiente de execução | `development` |
-| `PORT` | Porta do servidor | `8000` |
-| `JWT_SECRET` | Chave secreta JWT | - |
-| `JWT_EXPIRES_IN` | Expiração do token | `30m` |
-| `JWT_REFRESH_EXPIRES_IN` | Expiração do refresh | `7d` |
-| `BCRYPT_ROUNDS` | Rounds do bcrypt | `12` |
-| `ALLOWED_ORIGINS` | Origens CORS permitidas | - |
-
-## 🚀 Deploy
-
-### Docker
-```bash
-docker build -t soscancer-backend .
-docker run -p 8000:8000 soscancer-backend
-```
-
-### PM2
-```bash
-npm install -g pm2
-pm2 start dist/main.js --name soscancer-backend
-```
-
-## 📞 Suporte
-
-Para dúvidas ou problemas, entre em contato com a equipe de desenvolvimento.

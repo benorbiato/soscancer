@@ -1,203 +1,164 @@
-# 🎗️ SOS Cancer - Grupo Pongaiense de Combate ao Câncer
+# SOS Cancer - Grupo Pongaiense de Combate ao Câncer
 
-Sistema completo de apoio e comunidade para pessoas afetadas pelo câncer.
+A comprehensive support and community system for people affected by cancer. This project provides a complete platform with user management, authentication, dashboard, and various support features.
 
-## 🚀 **Status do Projeto**
+## Project Overview
 
-### ✅ **FUNCIONANDO PERFEITAMENTE**
-- **Backend**: API REST completa (NestJS + TypeScript)
-- **Frontend**: Interface moderna (React + TypeScript)
-- **Autenticação**: Sistema completo de login
-- **Segurança**: Proteções implementadas
-- **Design**: Identidade visual consistente
+SOS Cancer is a full-stack web application designed to support cancer patients, volunteers, and supporters. The platform offers a modern interface with secure authentication, user management, and various modules for different aspects of cancer support.
 
-## 🏗️ **Arquitetura**
+## Architecture
 
-### **Backend (NestJS + TypeScript)**
-```
-backend/
-├── src/
-│   ├── auth/                  # Módulo de autenticação
-│   ├── users/                 # Módulo de usuários
-│   ├── agenda/                # Módulo da agenda
-│   ├── health/                # Health check
-│   └── common/                # Código compartilhado
-├── data/                      # Dados JSON
-└── package.json              # Dependências Node.js
-```
+### Backend (NestJS + TypeScript)
+- RESTful API with comprehensive endpoints
+- JWT-based authentication system
+- User management and permissions
+- Agenda/events management
+- Health monitoring
+- Data validation and security
 
-### **Frontend (React + TypeScript)**
-```
-frontend/
-├── src/
-│   ├── pages/                # Páginas da aplicação
-│   ├── components/            # Componentes reutilizáveis
-│   ├── contexts/             # Contextos React
-│   ├── hooks/                # Hooks customizados
-│   ├── lib/                  # Utilitários e API
-│   └── modules/               # Módulos específicos
-├── app/                      # Estilos globais
-└── package.json              # Dependências Node.js
-```
+### Frontend (React + TypeScript)
+- Modern responsive interface
+- Component-based architecture
+- Internationalization support
+- Dashboard with multiple modules
+- Form validation and user feedback
+- Dark/light theme support
 
-## 🚀 **Como Executar**
+## Getting Started
 
-### **1. Backend (NestJS)**
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+
+### Backend Setup
 ```bash
 cd backend
 npm install
 npm run start:dev
 ```
 
-### **2. Frontend (React)**
+### Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### **3. Acesso**
-- **Frontend**: http://localhost:5173
-- **Backend**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
+### Access Points
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API Documentation: http://localhost:8000/docs
 
-## 🔧 **Funcionalidades**
+## Features
 
-### **✅ Autenticação Completa**
-- Registro de usuários
-- Login com JWT
-- Logout seguro
-- Refresh token automático
-- Rotas protegidas
+### Authentication System
+- User registration and login
+- JWT token-based authentication
+- Password security with bcrypt
+- Protected routes and permissions
+- Automatic token refresh
 
-### **✅ Interface Moderna**
-- Página inicial responsiva
-- Formulários de login/registro
-- Dashboard do usuário
-- Sistema de navegação
-- Design consistente
+### User Management
+- Multiple user types (volunteer, patient, supporter)
+- Profile management
+- User permissions and roles
+- Data validation and security
 
-### **✅ Segurança Avançada**
-- Hash de senhas com bcrypt
-- Tokens JWT seguros
-- Validação de dados
-- CORS configurado
-- Headers de segurança
+### Dashboard
+- Comprehensive overview
+- Upcoming events
+- Financial summaries
+- Project statistics
+- Quick actions
+- Latest news
 
-### **✅ Validação de Dados**
-- Email format e domínios válidos
-- Senha com força mínima (8+ caracteres)
-- Telefone em formato internacional
-- Sanitização de entrada
+### Security Features
+- Rate limiting
+- CORS configuration
+- Security headers
+- Input validation and sanitization
+- Password strength requirements
 
-## 🎨 **Sistema de Design**
+## Technology Stack
 
-### **Cores do Projeto**
-- **Primary**: Laranja/Vermelho (#E67E22)
-- **Background**: Branco (#FFFFFF)
-- **Foreground**: Cinza escuro (#2C3E50)
-- **Card**: Branco (#FFFFFF)
-- **Muted**: Cinza médio (#7F8C8D)
+### Backend
+- NestJS framework
+- TypeScript
+- JWT authentication
+- bcrypt for password hashing
+- Class-validator for validation
+- Swagger for API documentation
 
-### **Componentes**
-- Botões primários e secundários
-- Formulários com validação
-- Cards responsivos
-- Navegação intuitiva
-- Notificações toast
+### Frontend
+- React 18
+- TypeScript
+- Vite build tool
+- React Router for navigation
+- Tailwind CSS for styling
+- React Hook Form for forms
+- i18next for internationalization
 
-## 📊 **Testes Realizados**
+## Project Structure
 
-### **Backend**
-- ✅ Criação de usuário: `POST /api/v1/users`
-- ✅ Login: `POST /api/v1/auth/login`
-- ✅ Registro: `POST /api/v1/auth/register`
-- ✅ Autenticação: JWT funcionando
-- ✅ Validação: Dados corretos
+```
+soscancer/
+├── backend/                 # NestJS API
+│   ├── src/
+│   │   ├── auth/           # Authentication module
+│   │   ├── users/          # User management
+│   │   ├── agenda/         # Events management
+│   │   ├── health/         # Health checks
+│   │   └── common/         # Shared utilities
+│   └── data/               # JSON data storage
+├── frontend/               # React application
+│   ├── src/
+│   │   ├── pages/          # Application pages
+│   │   ├── components/     # Reusable components
+│   │   ├── modules/        # Feature modules
+│   │   ├── hooks/          # Custom hooks
+│   │   └── lib/            # Utilities and API
+└── README.md
+```
 
-### **Frontend**
-- ✅ Carregamento: Páginas funcionando
-- ✅ Navegação: Rotas funcionando
-- ✅ Autenticação: Contexto funcionando
-- ✅ Design: Cores aplicadas
+## Development
 
-### **Integração**
-- ✅ Comunicação: Frontend ↔ Backend
-- ✅ Autenticação: Login completo
-- ✅ Dados: Persistência funcionando
-- ✅ Segurança: Tokens funcionando
+### Backend Development
+```bash
+cd backend
+npm run start:dev          # Start development server
+npm run build              # Build for production
+npm run start:prod         # Start production server
+npm run lint               # Run linting
+npm run test               # Run tests
+```
 
-## 🎯 **Funcionalidades Principais**
+### Frontend Development
+```bash
+cd frontend
+npm run dev                # Start development server
+npm run build              # Build for production
+npm run preview            # Preview production build
+npm run lint               # Run linting
+```
 
-### **1. Sistema de Usuários**
-- Registro com validação completa
-- Login seguro com JWT
-- Perfil do usuário
-- Diferentes tipos de usuário (voluntário, paciente, apoiador)
+## Contributing
 
-### **2. Interface Responsiva**
-- Layout adaptativo para mobile
-- Grid responsivo para tablet
-- Layout otimizado para desktop
-- Contraste adequado para acessibilidade
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
 
-### **3. Segurança Avançada**
-- Rate limiting contra spam
-- CORS configurado corretamente
-- Headers de segurança HTTP
-- Dados sanitizados e validados
+## License
 
-## 🎉 **Resultado Final**
+This project is licensed under the MIT License.
 
-### **✅ PROJETO 100% FUNCIONAL**
-
-1. **Backend**: API REST completa e segura
-2. **Frontend**: Interface moderna e responsiva
-3. **Autenticação**: Sistema completo de login
-4. **Segurança**: Proteções implementadas
-5. **Design**: Identidade visual consistente
-6. **Integração**: Frontend e Backend comunicando
-7. **Dados**: Persistência funcionando
-8. **Validação**: Dados seguros e limpos
-
-### **🚀 PRONTO PARA PRODUÇÃO**
-
-- Código limpo e bem estruturado
-- Segurança implementada
-- Performance otimizada
-- Manutenibilidade garantida
-- Documentação completa
-- Funcionalidades validadas
-
-## 📝 **Próximos Passos**
-
-1. **Deploy**: Configurar servidor de produção
-2. **Banco de Dados**: Migrar para PostgreSQL
-3. **Testes**: Implementar testes automatizados
-4. **CI/CD**: Pipeline de deploy
-5. **Monitoramento**: Logs e métricas
-6. **Backup**: Estratégia de backup
-
-## 🎊 **PROJETO FINALIZADO COM SUCESSO!**
-
-O sistema SOS Cancer está **100% funcional** e pronto para uso!
-
-### **Acesso:**
-- **Frontend**: http://localhost:5173
-- **Backend**: http://localhost:8000
-- **Usuário de teste**: `frontend@test.com` / `12345678`
-
-**Parabéns! O projeto está completo e funcionando perfeitamente!** 🎉
-
----
-
-## 📞 **Contato**
+## Contact
 
 **Grupo Pongaiense de Combate ao Câncer**
-- Website: [Em desenvolvimento]
 - Email: contato@soscancer.org
-- Telefone: (11) 99999-9999
+- Website: [In development]
 
 ---
 
-*Desenvolvido com ❤️ para apoiar pessoas afetadas pelo câncer*
+*Developed with care to support people affected by cancer*
