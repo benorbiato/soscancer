@@ -6,6 +6,8 @@ import { Event } from '../types'
 import { formatBrazilianDate } from '@/lib/date-utils'
 import { useTranslation } from 'react-i18next'
 import { agenda } from '@/common/locales'
+import { PermissionGuard } from '@/components/permission-guard'
+import { Permission } from '@/lib/permissions'
 
 interface SimpleRemindersProps {
   reminders: Event[]
@@ -54,18 +56,21 @@ export function SimpleReminders({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">{t('events')}</CardTitle>
-          <Button onClick={() => setIsAdding(true)} size="sm" className="h-8">
-            <Plus className="h-4 w-4 mr-1" />
-            {t('newEvent')}
-          </Button>
+          <PermissionGuard permission={Permission.CREATE_EVENTS}>
+            <Button onClick={() => setIsAdding(true)} size="sm" className="h-8">
+              <Plus className="h-4 w-4 mr-1" />
+              {t('newEvent')}
+            </Button>
+          </PermissionGuard>
         </div>
       </CardHeader>
       <CardContent>
-        {isAdding && (
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-4 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
-          >
+        <PermissionGuard permission={Permission.CREATE_EVENTS}>
+          {isAdding && (
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
+            >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Título *</label>
@@ -111,7 +116,8 @@ export function SimpleReminders({
               </Button>
             </div>
           </form>
-        )}
+          )}
+        </PermissionGuard>
 
         <div className="space-y-3">
           {reminders.length === 0 ? (

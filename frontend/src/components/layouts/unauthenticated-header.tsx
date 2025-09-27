@@ -38,30 +38,37 @@ function UnauthenticatedHeader() {
           SOS Cancer
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Link
+            to="/about"
+            className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Sobre
+          </Link>
+
           <Link
             to="/login"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Login
           </Link>
 
           <Link
             to="/register"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Cadastrar
           </Link>
 
           <button
             onClick={toggleTheme}
-            className="flex items-center p-2 rounded-md hover:bg-muted transition-colors"
+            className="flex items-center p-1.5 sm:p-2 rounded-md hover:bg-muted transition-colors"
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
-              <Moon className="size-4 text-muted-foreground" />
+              <Moon className="size-3.5 sm:size-4 text-muted-foreground" />
             ) : (
-              <Sun className="size-4 text-muted-foreground" />
+              <Sun className="size-3.5 sm:size-4 text-muted-foreground" />
             )}
           </button>
         </div>

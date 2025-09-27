@@ -22,12 +22,12 @@ function HomeView() {
   return (
     <div className="min-h-screen bg-background">
       {isAuthenticated ? <AuthenticatedHeader /> : <UnauthenticatedHeader />}
-      <div className="container mx-auto px-4 py-16">
+      <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-6">
             Grupo Pongaiense de Combate ao Câncer
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto px-4">
             Apoiando pessoas e famílias em sua jornada contra o câncer com cuidado, informação e
             comunidade.
           </p>
@@ -45,12 +45,12 @@ function HomeView() {
               </Button>
             </div>
           ) : (
-            <div className="space-x-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
                 onClick={() => navigate('/login')}
                 size="lg"
                 variant="default"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto"
               >
                 Fazer Login
               </Button>
@@ -58,15 +58,23 @@ function HomeView() {
                 onClick={() => navigate('/register')}
                 size="lg"
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary/10"
+                className="border-primary text-primary hover:bg-primary/10 w-full sm:w-auto"
               >
                 Cadastrar-se
+              </Button>
+              <Button
+                onClick={() => navigate('/about')}
+                size="lg"
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 shadow-md hover:shadow-lg w-full sm:w-auto"
+              >
+                Conhecer Mais
               </Button>
             </div>
           )}
         </div>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="text-center p-6 bg-card rounded-lg shadow-md border">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg

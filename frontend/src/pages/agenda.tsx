@@ -18,12 +18,12 @@ export default function Agenda() {
   return (
     <ProtectedRoute requiredPermission={Permission.VIEW_AGENDA}>
       <MainLayout>
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">{t('title')}</h1>
+        <div className="mb-8 px-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{t('title')}</h1>
           <p className="text-muted-foreground mt-2">{t('subtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="flex flex-col space-y-6">
             <div className="flex-1">
               <AgendaDatepicker

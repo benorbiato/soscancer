@@ -14,8 +14,8 @@ function DashboardView() {
   return (
     <ProtectedRoute requiredPermission={Permission.VIEW_DASHBOARD}>
       <MainLayout>
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+        <div className="mb-8 px-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Dashboard</h1>
           <p className="text-muted-foreground mt-2">
             Gerencie suas atividades e acesse as funcionalidades
           </p>
