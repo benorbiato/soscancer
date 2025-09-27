@@ -10,17 +10,40 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+  username: z
+    .string()
+    .nonempty({ message: 'O nome de usuário é obrigatório.' })
+    .min(2, { message: 'Username must be at least 2 characters.' }),
+
+  email: z
+    .string()
+    .nonempty({ message: 'O email é obrigatório.' })
+    .email({ message: 'Insira um email válido.' }),
+
+  password: z
+    .string()
+    .nonempty({ message: 'A senha é obrigatória.' })
+    .min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }),
+
+  phone: z.string().nonempty({ message: 'O telefone é obrigatório.' }),
+
+  role: z.enum(['volunteer', 'patient', 'sponsor'], {
+    required_error: 'Selecione uma opção',
   }),
 })
 
@@ -31,6 +54,10 @@ function RegisterForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
+      email: '',
+      password: '',
+      phone: '',
+      role: undefined,
     },
   })
 
@@ -62,7 +89,7 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.emailLabel')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('register.emailPlaceholder')} {...field} />
+                <Input type="email" placeholder={t('register.emailPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,8 +103,46 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.passwordLabel')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('register.emailPlaceholder')} {...field} />
+                <Input type="password" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('register.phoneLabel')}</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="role"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('register.roleLabel')}</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={t('register.rolePlaceholder')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="volunteer">Voluntário</SelectItem>
+                    <SelectItem value="patient">Paciente</SelectItem>
+                    <SelectItem value="sponsor">Apoiador</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

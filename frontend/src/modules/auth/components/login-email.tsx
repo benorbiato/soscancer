@@ -7,13 +7,7 @@ import { z } from 'zod'
 import { useTranslation } from 'react-i18next'
 import { auth } from '@/common/locales'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 

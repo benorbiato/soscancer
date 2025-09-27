@@ -1,6 +1,6 @@
 {
-  "title": "Login to your account",
-  "subtitle": "Enter your email below to login to your account",
+  "registryTitle": "Novo cadastro",
+  "registrySubtitle": "Informe seus dados abaixo para criar a sua conta",
   "email": "Email",
   "password": "Password",
   "forgotPassword": "Forgot your password?",

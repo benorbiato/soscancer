@@ -1,11 +1,14 @@
 {
-  "title": "Novo cadastro",
-  "subtitle": "Informe seus dados abaixo para criar a sua conta",
+  "registryTitle": "Novo cadastro",
+  "registrySubtitle": "Informe seus dados abaixo para criar a sua conta",
   "register": {
-    "usernameLabel": "Nome completo",
-    "emailLabel": "E-mail",
+    "usernameLabel": "Nome completo*",
+    "emailLabel": "E-mail*",
     "emailPlaceholder": "exemplo@email.com",
-    "passwordLabel": "Senha"
+    "passwordLabel": "Senha*",
+    "phoneLabel": "Telefone*",
+    "roleLabel": "Selecione o seu tipo de usuário*",
+    "rolePlaceholder": "Selecionar"
   },
   "signUp": "Criar cadastro",
   "loginWithGoogle": "Criar cadastro com Google"

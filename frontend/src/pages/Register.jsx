@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RegisterCard } from '../modules/registry/components'
+import { Registry } from '../modules/registry'
 
 import { createUser } from '@/lib/api/users'
 
@@ -37,7 +37,7 @@ export default function RegisterPage() {
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden">
       <div className="w-full max-w-md text-center">
-        <RegisterCard />
+        <Registry />
       </div>
     </div>
   )
