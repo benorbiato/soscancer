@@ -24,5 +24,54 @@
       "title": "Como receber apoio?",
       "subtitle": "Saiba como participar do grupo"
     }
+  },
+  "upcomingEvents": {
+    "title": "Upcoming Events",
+    "noEvents": "No upcoming events found",
+    "urgent": "Urgent",
+    "normal": "Normal"
+  },
+  "welcome": {
+    "subtitle": "Together we make a difference in the fight against cancer"
+  },
+  "donation": {
+    "title": "Make a Donation",
+    "scanQR": "Scan QR Code",
+    "pixTitle": "PIX",
+    "copy": "Copy",
+    "description": "Your contribution makes all the difference in the lives of those who need support.",
+    "donateNow": "Donate Now"
+  },
+  "balance": {
+    "title": "Financial Summary",
+    "totalRaised": "Total Raised",
+    "monthlyGoal": "Monthly Goal",
+    "ofGoal": "of goal",
+    "donors": "Donors",
+    "growth": "Growth"
+  },
+  "stats": {
+    "title": "Our Numbers",
+    "patientsHelped": "Patients Helped",
+    "eventsHeld": "Events Held",
+    "volunteers": "Volunteers",
+    "materialsDistributed": "Materials Distributed",
+    "supportCalls": "Support Calls",
+    "citiesReached": "Cities Reached"
+  },
+  "news": {
+    "title": "Latest News",
+    "noNews": "No news available",
+    "readMore": "Read more",
+    "viewAll": "View all news",
+    "categories": {
+      "update": "Update",
+      "event": "Event",
+      "achievement": "Achievement",
+      "announcement": "Announcement"
+    }
+  },
+  "quickActions": {
+    "title": "Quick Actions"
   }
 }

@@ -19,7 +19,7 @@ export function useAbout() {
         error: null,
       })
     } catch (error) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         isLoading: false,
         error: error instanceof Error ? error.message : 'An error occurred',

@@ -20,9 +20,7 @@ export function CallToAction() {
 
   return (
     <div className="text-center bg-primary/5 p-12 rounded-lg border">
-      <h2 className="text-3xl font-bold text-foreground mb-4">
-        {t('joinOurStory')}
-      </h2>
+      <h2 className="text-3xl font-bold text-foreground mb-4">{t('joinOurStory')}</h2>
       <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
         {t('joinOurStoryText')}
       </p>

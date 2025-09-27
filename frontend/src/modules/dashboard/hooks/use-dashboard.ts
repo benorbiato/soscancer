@@ -9,12 +9,25 @@ export function useDashboard() {
   const [state, setState] = useState<DashboardState>({
     isLoading: false,
     cards: DASHBOARD_CONSTANTS.CARDS,
+    events: DASHBOARD_CONSTANTS.EVENTS,
+    balance: DASHBOARD_CONSTANTS.BALANCE,
+    stats: DASHBOARD_CONSTANTS.STATS,
+    news: DASHBOARD_CONSTANTS.NEWS,
+    quickActions: DASHBOARD_CONSTANTS.QUICK_ACTIONS,
   })
 
   useEffect(() => {
     // Aqui você poderia carregar dados específicos do dashboard
     // Por enquanto, usamos os dados estáticos das constantes
-    setState((prev) => ({ ...prev, cards: DASHBOARD_CONSTANTS.CARDS }))
+    setState((prev) => ({
+      ...prev,
+      cards: DASHBOARD_CONSTANTS.CARDS,
+      events: DASHBOARD_CONSTANTS.EVENTS,
+      balance: DASHBOARD_CONSTANTS.BALANCE,
+      stats: DASHBOARD_CONSTANTS.STATS,
+      news: DASHBOARD_CONSTANTS.NEWS,
+      quickActions: DASHBOARD_CONSTANTS.QUICK_ACTIONS,
+    }))
   }, [])
 
   return {

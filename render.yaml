@@ -1,0 +1,42 @@
+services:
+  # Frontend Service
+  - type: web
+    name: soscancer-frontend
+    env: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /index.html
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+
+  # Backend Service
+  - type: web
+    name: soscancer-backend
+    env: node
+    buildCommand: cd backend && npm ci && npm run build
+    startCommand: cd backend && npm run start:prod
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    headers:
+      - path: /api/*
+        name: Access-Control-Allow-Origin
+        value: "*"
+      - path: /api/*
+        name: Access-Control-Allow-Methods
+        value: "GET, POST, PUT, DELETE, OPTIONS"
+      - path: /api/*
+        name: Access-Control-Allow-Headers
+        value: "Content-Type, Authorization"
