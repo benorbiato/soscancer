@@ -5,7 +5,7 @@ Sistema completo de apoio e comunidade para pessoas afetadas pelo câncer.
 ## 🚀 **Status do Projeto**
 
 ### ✅ **FUNCIONANDO PERFEITAMENTE**
-- **Backend**: API REST completa (FastAPI)
+- **Backend**: API REST completa (NestJS + TypeScript)
 - **Frontend**: Interface moderna (React + TypeScript)
 - **Autenticação**: Sistema completo de login
 - **Segurança**: Proteções implementadas
@@ -13,18 +13,17 @@ Sistema completo de apoio e comunidade para pessoas afetadas pelo câncer.
 
 ## 🏗️ **Arquitetura**
 
-### **Backend (FastAPI)**
+### **Backend (NestJS + TypeScript)**
 ```
 backend/
-├── app/
-│   ├── api/v1/endpoints/     # Endpoints da API
-│   ├── core/                 # Configurações e segurança
-│   ├── middleware/           # Middlewares de segurança
-│   ├── repositories/         # Persistência de dados
-│   ├── schemas/              # Modelos Pydantic
-│   └── services/             # Lógica de negócio
-├── data/                     # Dados JSON
-└── requirements.txt          # Dependências Python
+├── src/
+│   ├── auth/                  # Módulo de autenticação
+│   ├── users/                 # Módulo de usuários
+│   ├── agenda/                # Módulo da agenda
+│   ├── health/                # Health check
+│   └── common/                # Código compartilhado
+├── data/                      # Dados JSON
+└── package.json              # Dependências Node.js
 ```
 
 ### **Frontend (React + TypeScript)**
@@ -43,13 +42,11 @@ frontend/
 
 ## 🚀 **Como Executar**
 
-### **1. Backend (FastAPI)**
+### **1. Backend (NestJS)**
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+npm install
+npm run start:dev
 ```
 
 ### **2. Frontend (React)**
@@ -112,8 +109,9 @@ npm run dev
 ## 📊 **Testes Realizados**
 
 ### **Backend**
-- ✅ Criação de usuário: `POST /api/v1/users/`
+- ✅ Criação de usuário: `POST /api/v1/users`
 - ✅ Login: `POST /api/v1/auth/login`
+- ✅ Registro: `POST /api/v1/auth/register`
 - ✅ Autenticação: JWT funcionando
 - ✅ Validação: Dados corretos
 

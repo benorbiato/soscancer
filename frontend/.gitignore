@@ -18,12 +18,17 @@ lerna-debug.log*
 dist/
 build/
 out/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
 
 # Cache directories
 .cache/
 .parcel-cache/
 .eslintcache
 .stylelintcache
+.vite/
 
 # Runtime data
 pids
@@ -51,9 +56,9 @@ logs
 
 # Microbundle cache
 .rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
+.rpt2_cache_cjs/
+.rpt2_cache_es/
+.rpt2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -108,11 +113,18 @@ logs/
 uploads/
 downloads/
 
-# NestJS specific
+# Vite specific
 dist/
-node_modules/
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.vite/
+.cache/
+
+# React/Vue specific
+build/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+
+# Storybook build outputs
+.out
+.storybook-out
