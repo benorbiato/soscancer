@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Moon, Sun, Menu, X, User, LogOut, Settings } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/auth-context'
-import { Button } from '@/components/ui/button'
-import { Breadcrumb } from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button.jsx'
+import { Breadcrumb } from '@/components/ui/breadcrumb.tsx'
 import { useBreadcrumb } from '@/hooks/use-breadcrumb'
 
 function isThemeSetToDark(): boolean {

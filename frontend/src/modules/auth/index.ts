@@ -1,4 +1,4 @@
-export { Auth } from './index'
+export { Auth } from './index.tsx'
 export { LoginEmail } from './components/login-email'
 export { Headline } from './components/headline'
 export { SocialMedias } from './components/social-medias'

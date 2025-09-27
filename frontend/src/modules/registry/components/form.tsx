@@ -3,7 +3,7 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { registry } from '@/common/locales'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button.jsx'
 import {
   Form,
   FormControl,
@@ -11,15 +11,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
+} from '@/components/ui/form.tsx'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
+} from '@/components/ui/select.tsx'
+import { Input } from '@/components/ui/input.jsx'
 import { useRegistryForm } from '../hooks/use-registry-form'
 import { REGISTRY_CONSTANTS } from '../constants'
 

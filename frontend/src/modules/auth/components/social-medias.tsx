@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { auth } from '@/common/locales'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button.jsx'
 
 import { LogoGoogle, LogoFacebook } from 'geist-icons'
 

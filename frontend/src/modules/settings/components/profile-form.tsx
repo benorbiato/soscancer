@@ -1,7 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Button } from '@/components/ui/button.jsx'
+import { Input } from '@/components/ui/input.jsx'
+import { Label } from '@/components/ui/label.jsx'
 import { User } from 'lucide-react'
 import { ProfileImage } from './profile-image'
 import { SettingsFormData } from '../types'
@@ -24,7 +24,7 @@ export function ProfileForm({
   onUpdateProfile,
 }: ProfileFormProps) {
   return (
-    <Card className="w-full">
+    <Card className="w-full border-brand-500 dark:border-border">
       <CardHeader className="space-y-1.5">
         <CardTitle className="flex items-center gap-2">
           <User className="h-5 w-5" />

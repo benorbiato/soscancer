@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/contexts/auth-context'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button.jsx'
 import { useNavigate } from 'react-router-dom'
 import { UnauthenticatedHeader } from '@/components/layouts/unauthenticated-header'
 import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
