@@ -7,6 +7,7 @@ import App from './App.jsx'
 import RegisterPage from './pages/Register.jsx'
 import AppLayout from './components/layouts/AppLayout.jsx'
 import './lib/i18n'
+import { Dashboard } from './pages/Dashboard'
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,13 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <App /> },
       { path: 'register', element: <RegisterPage /> },
+    ],
+  },
+  {
+    path: '/dashboard',
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Dashboard /> },
     ],
   },
 ])

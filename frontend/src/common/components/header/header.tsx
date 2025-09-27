@@ -67,6 +67,19 @@ function Header() {
             Register
           </NavLink>
 
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `relative pb-1 transition ${
+                isActive
+                  ? 'font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-white'
+                  : 'hover:opacity-90'
+              }`
+            }
+          >
+            Dashboard
+          </NavLink>
+
           <button onClick={toggleTheme} className="flex items-center" aria-label="Toggle theme">
             {isDarkMode ? (
               <Moon

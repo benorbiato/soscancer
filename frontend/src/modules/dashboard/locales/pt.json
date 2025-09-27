@@ -1,0 +1,28 @@
+{
+    "cards": {
+        "card1": {
+            "title": "Conheça o grupo",
+            "subtitle": "Confira nossa história e o que fazemos"
+        },
+        "card2": {
+            "title": "Outros serviços",
+            "subtitle": "Saiba mais opções que você pode acessar por aqui"
+        },
+        "card3": {
+            "title": "Como ajudar?",
+            "subtitle": "Nosso canal de doações"
+        },
+        "card4": {
+            "title": "Material educativo",
+            "subtitle": "Acesse materiais que podem ajudar pacientes oncológicos"
+        },
+        "card5": {
+            "title": "Como ser um voluntário?",
+            "subtitle": "Saiba como participar do grupo"
+        },
+        "card6": {
+            "title": "Como receber apoio?",
+            "subtitle": "Saiba como participar do grupo"
+        }
+    }
+}

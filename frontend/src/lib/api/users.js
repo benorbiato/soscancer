@@ -19,3 +19,7 @@ export function updateUser(userId, payload) {
 export function deleteUser(userId) {
   return apiFetch(`/api/v1/users/${userId}`, { method: 'DELETE' })
 }
+
+export function loginUser(payload) {
+  return apiFetch('/api/v1/auth/login', { method: 'POST', body: payload })
+}

@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { registry } from '@/common/locales'
@@ -23,12 +24,14 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
+import { createUser } from '@/lib/api/users'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
-  username: z
+  name: z
     .string()
-    .nonempty({ message: 'O nome de usuário é obrigatório.' })
-    .min(2, { message: 'Username must be at least 2 characters.' }),
+    .nonempty({ message: 'O nome é obrigatório.' })
+    .min(2, { message: 'O nome deve ter no mínimo 2 caracteres.' }),
 
   email: z
     .string()
@@ -40,20 +43,22 @@ const formSchema = z.object({
     .nonempty({ message: 'A senha é obrigatória.' })
     .min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }),
 
-  phone: z.string().nonempty({ message: 'O telefone é obrigatório.' }),
+  phone: z.string().optional(),
 
   role: z.enum(['volunteer', 'patient', 'sponsor'], {
-    required_error: 'Selecione uma opção',
+    message: 'Selecione uma opção',
   }),
 })
 
 function RegisterForm() {
   const { t } = useTranslation(registry)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const toast = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      name: '',
       email: '',
       password: '',
       phone: '',
@@ -61,8 +66,27 @@ function RegisterForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true)
+    
+    try {
+      const userData = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        phone: values.phone || null,
+        role: values.role,
+      }
+      
+      const response = await createUser(userData)
+      toast.success('Usuário criado com sucesso!', `ID: ${response.id}`)
+      form.reset()
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error)
+      toast.error('Erro ao criar usuário', error instanceof Error ? error.message : 'Erro desconhecido')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -70,7 +94,7 @@ function RegisterForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('register.usernameLabel')}</FormLabel>
@@ -147,11 +171,11 @@ function RegisterForm() {
           )}
         />
 
-        <Button type="submit" className="w-full">
-          {t('signUp')}
+        <Button type="submit" className="w-full" disabled={isSubmitting} variant="default" size="default">
+          {isSubmitting ? 'Criando usuário...' : t('signUp')}
         </Button>
 
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" size="default">
           {t('loginWithGoogle')}
         </Button>
       </form>
