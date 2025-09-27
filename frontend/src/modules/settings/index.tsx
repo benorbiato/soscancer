@@ -1,5 +1,5 @@
 import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
-import { ProfileForm, PasswordForm } from './components'
+import { ProfileForm, PasswordForm, DeleteAccountForm } from './components'
 import { useSettings } from './hooks/use-settings'
 
 export default function Settings() {
@@ -44,6 +44,8 @@ export default function Settings() {
             onTogglePasswordVisibility={togglePasswordVisibility}
             onUpdatePassword={handleUpdatePassword}
           />
+
+          <DeleteAccountForm isLoading={state.isLoading} />
         </div>
       </div>
     </div>
