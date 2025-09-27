@@ -1,8 +1,9 @@
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { dashboard } from '@/common/locales'
 import { Cards } from '@/modules/dashboard/components/cards'
 
-function Dashboard() {
+function DashboardView() {
   const { t } = useTranslation(dashboard)
 
   const cards = [
@@ -25,4 +26,4 @@ function Dashboard() {
   )
 }
 
-export { Dashboard }
+export { DashboardView }
