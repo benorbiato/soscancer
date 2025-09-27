@@ -219,10 +219,18 @@ git push origin main
 4. Configure:
    - **Name**: `soscancer-monolith`
    - **Environment**: `Node`
-   - **Build Command**: `./build-monolith.sh`
+   - **Build Command**: `bash build.sh` (ou use o comando inline abaixo)
    - **Start Command**: `cd backend && npm run start:prod`
    - **Node Version**: `18`
    - **Plan**: `Starter` (gratuito)
+
+#### Alternativa - Comando Inline (se o script falhar):
+
+Se o script `build.sh` não funcionar, use este comando inline no campo "Build Command":
+
+```bash
+echo "🏗️ Building monolith application..." && echo "📦 Building frontend..." && cd frontend && npm install && npm run build && cd .. && echo "🔧 Building backend..." && cd backend && npm install && npm run build && cd .. && echo "✅ Build completed successfully!"
+```
 
 ### 3. Variáveis de Ambiente
 
