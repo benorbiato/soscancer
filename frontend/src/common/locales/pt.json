@@ -1,0 +1,23 @@
+{
+  "appTitle": "Grupo Pongaiense de Combate ao Câncer",
+  "appSubtitle": "Faça parte e saiba como ajudar",
+  "loginTitle": "Faça login na sua conta.",
+  "loginSubtitle": "Seja bem-vindo de volta",
+  "register": "Cadastro",
+  "loginWithGoogle": "Logar com o Google",
+  "username": "usuário",
+  "password": "senha",
+  "copyright": "© Copyright 2025 T3J Tech",
+  "userTypeSelect": "Selecione seu tipo de usuário",
+  "patient": "Paciente",
+  "volunteer": "Voluntário",
+  "supporter": "Apoiador",
+  "admin": "Administrador",
+  "accessServices": "Acesse os serviços disponíveis",
+  "calendar": "Calendário",
+  "news": "Novidades",
+  "about": "Conheça o grupo",
+  "back": "Voltar",
+  "sending": "Enviando...",
+  "signup": "+ Cadastre-se"
+}

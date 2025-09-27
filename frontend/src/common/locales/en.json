@@ -1,0 +1,22 @@
+{
+  "appTitle": "GRUPO PONGAIENSE DE COMBATE AO CÂNCER",
+  "appSubtitle": "Join and learn how to help",
+  "login": "Login",
+  "register": "Register",
+  "loginWithGoogle": "Login with Google",
+  "username": "user",
+  "password": "password",
+  "copyright": "© Copyright 2025 T3J Tech",
+  "userTypeSelect": "Select your user type",
+  "patient": "Patient",
+  "volunteer": "Volunteer",
+  "supporter": "Supporter",
+  "admin": "Administrator",
+  "accessServices": "Access available services",
+  "calendar": "Calendar",
+  "news": "News",
+  "about": "About the group",
+  "back": "Back",
+  "sending": "Sending...",
+  "signup": "+ Sign up"
+}

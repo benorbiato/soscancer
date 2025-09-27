@@ -1,4 +1,5 @@
 export { HomeView } from './home'
+export { AboutView } from './about'
 export { LoginView } from './login'
 export { RegisterView } from './register'
 export { DashboardView } from './dashboard'

@@ -1,55 +1,38 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+// Import common translations
+import commonEn from '@/common/locales/en.json'
+import commonPt from '@/common/locales/pt.json'
+
+// Import module translations
+import authEn from '@/modules/auth/locales/en.json'
+import authPt from '@/modules/auth/locales/pt.json'
+import registryEn from '@/modules/registry/locales/en.json'
+import registryPt from '@/modules/registry/locales/pt.json'
+import dashboardEn from '@/modules/dashboard/locales/en.json'
+import dashboardPt from '@/modules/dashboard/locales/pt.json'
+import agendaEn from '@/modules/agenda/locales/en.json'
+import agendaPt from '@/modules/agenda/locales/pt.json'
+import aboutEn from '@/modules/about/locales/en.json'
+import aboutPt from '@/modules/about/locales/pt.json'
+
 const resources = {
   en: {
-    translation: {
-      appTitle: 'GRUPO PONGAIENSE DE COMBATE AO CÂNCER',
-      appSubtitle: 'Join and learn how to help',
-      login: 'Login',
-      register: 'Register',
-      loginWithGoogle: 'Login with Google',
-      username: 'user',
-      password: 'password',
-      copyright: '© Copyright 2025 T3J Tech',
-      userTypeSelect: 'Select your user type',
-      patient: 'Patient',
-      volunteer: 'Volunteer',
-      supporter: 'Supporter',
-      admin: 'Administrator',
-      accessServices: 'Access available services',
-      calendar: 'Calendar',
-      news: 'News',
-      about: 'About the group',
-      back: 'Back',
-      sending: 'Sending...',
-      signup: '+ Sign up',
-    },
+    translation: commonEn,
+    auth: authEn,
+    registry: registryEn,
+    dashboard: dashboardEn,
+    agenda: agendaEn,
+    about: aboutEn,
   },
   pt: {
-    translation: {
-      appTitle: 'Grupo Pongaiense de Combate ao Câncer',
-      appSubtitle: 'Faça parte e saiba como ajudar',
-      loginTitle: 'Faça login na sua conta.',
-      loginSubtitle: 'Seja bem-vindo de volta',
-      register: 'Cadastro',
-      loginWithGoogle: 'Logar com o Google',
-      username: 'usuário',
-      password: 'senha',
-      copyright: '© Copyright 2025 T3J Tech',
-      userTypeSelect: 'Selecione seu tipo de usuário',
-      patient: 'Paciente',
-      volunteer: 'Voluntário',
-      supporter: 'Apoiador',
-      admin: 'Administrador',
-      accessServices: 'Acesse os serviços disponíveis',
-      calendar: 'Calendário',
-      news: 'Novidades',
-      about: 'Conheça o grupo',
-      back: 'Voltar',
-      sending: 'Enviando...',
-      signup: '+ Cadastre-se',
-    },
+    translation: commonPt,
+    auth: authPt,
+    registry: registryPt,
+    dashboard: dashboardPt,
+    agenda: agendaPt,
+    about: aboutPt,
   },
 }
 
