@@ -56,3 +56,13 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
   pip install -r requirements.txt
   ```
 - If `users.json` becomes malformed, the app auto-resets to an empty structure.
+
+### Linting
+
+Install dev tools and run Ruff:
+
+```bash
+pip install -r requirements-dev.txt
+ruff check .
+ruff check . --fix  # auto-fix where possible
+```

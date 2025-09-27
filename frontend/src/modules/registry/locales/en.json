@@ -1,0 +1,10 @@
+{
+  "registryTitle": "Novo cadastro",
+  "registrySubtitle": "Informe seus dados abaixo para criar a sua conta",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot your password?",
+  "login": "Login",
+  "loginWithGoogle": "Login with Google",
+  "signUp": "Sign Up"
+}
