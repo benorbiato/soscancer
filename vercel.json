@@ -39,11 +39,6 @@
       "dest": "/frontend/dist/$1"
     }
   ],
-  "functions": {
-    "backend/src/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   }
