@@ -1,46 +1,27 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-
+import { Eye, EyeOff } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { auth } from '@/common/locales'
-
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-})
+import { useAuthForm } from '../hooks/use-auth-form'
 
 function LoginEmail() {
   const { t } = useTranslation(auth)
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-  }
+  const { form, state, handleSubmit, togglePasswordVisibility } = useAuthForm()
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder={t('email')} {...field} />
+                <Input type="email" placeholder={t('email')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -53,15 +34,32 @@ function LoginEmail() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder={t('password')} {...field} />
+                <div className="relative">
+                  <Input 
+                    type={state.showPassword ? "text" : "password"} 
+                    placeholder={t('password')} 
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {state.showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full">
-          {t('continueLogin')}
+        <Button type="submit" className="w-full" disabled={state.isLoading} variant="default" size="default">
+          {state.isLoading ? 'Fazendo login...' : t('continueLogin')}
         </Button>
       </form>
     </Form>

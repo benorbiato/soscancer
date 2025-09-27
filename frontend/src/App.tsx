@@ -1,0 +1,30 @@
+import '../app/global.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './contexts/auth-context'
+import { ToastProvider } from './components/ui/toast'
+import { HomeView, LoginView, RegisterView, DashboardView } from './pages'
+import Settings from './modules/settings'
+import Agenda from './pages/agenda'
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-background">
+          <Routes>
+            <Route path="/" element={<HomeView />} />
+            <Route path="/login" element={<LoginView />} />
+            <Route path="/register" element={<RegisterView />} />
+            <Route path="/dashboard" element={<DashboardView />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/agenda" element={<Agenda />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
+        <ToastProvider />
+      </Router>
+    </AuthProvider>
+  )
+}
+
+export default App

@@ -3,21 +3,11 @@ from __future__ import annotations
 from typing import Dict, List, Optional
 from uuid import UUID, uuid4
 
-from app.schemas.user import UserCreate, UserInDB, UserPublic, UserUpdate, UserSummary
+from datetime import datetime
+from app.schemas.user import UserCreate, UserInDB, UserPublic, UserUpdate, UserSummary, UserProfile
 from app.repositories.json_repository import JsonRepository
+from app.core.security import get_password_hash, verify_password
 from pathlib import Path
-from passlib.context import CryptContext
-
-
-pwd_context = CryptContext(
-    schemes=["bcrypt"],
-    deprecated="auto",
-    bcrypt__truncate_error=False,  # silently truncate >72B to avoid ValueError
-)
-
-
-def _hash_password(plain_password: str) -> str:
-    return pwd_context.hash(plain_password)
 
 
 class UserService:
@@ -60,13 +50,17 @@ class UserService:
                 raise ValueError("email_already_exists")
 
         user_id = uuid4()
+        now = datetime.utcnow().isoformat()
+        
         user_in_db = UserInDB(
             id=user_id,
             name=payload.name,
             email=payload.email,
             phone=payload.phone,
             role=payload.role,
-            hashed_password=_hash_password(payload.password),
+            hashed_password=get_password_hash(payload.password),
+            created_at=now,
+            updated_at=now,
         )
         self._users[user_id] = user_in_db
         self._persist()
@@ -76,15 +70,20 @@ class UserService:
         existing = self._users.get(user_id)
         if not existing:
             return None
+        
         update_data = payload.model_dump(exclude_unset=True)
+        now = datetime.utcnow().isoformat()
+        
         if "name" in update_data:
             existing.name = update_data["name"]
         if "password" in update_data and update_data["password"] is not None:
-            existing.hashed_password = _hash_password(update_data["password"])
+            existing.hashed_password = get_password_hash(update_data["password"])
         if "phone" in update_data:
             existing.phone = update_data["phone"]
         if "role" in update_data:
             existing.role = update_data["role"]
+        
+        existing.updated_at = now
         self._users[user_id] = existing
         self._persist()
         return UserPublic(**existing.model_dump())

@@ -1,9 +1,6 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-
+import { Eye, EyeOff } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { registry } from '@/common/locales'
 import { Button } from '@/components/ui/button'
@@ -23,54 +20,19 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
-
-const formSchema = z.object({
-  username: z
-    .string()
-    .nonempty({ message: 'O nome de usuário é obrigatório.' })
-    .min(2, { message: 'Username must be at least 2 characters.' }),
-
-  email: z
-    .string()
-    .nonempty({ message: 'O email é obrigatório.' })
-    .email({ message: 'Insira um email válido.' }),
-
-  password: z
-    .string()
-    .nonempty({ message: 'A senha é obrigatória.' })
-    .min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }),
-
-  phone: z.string().nonempty({ message: 'O telefone é obrigatório.' }),
-
-  role: z.enum(['volunteer', 'patient', 'sponsor'], {
-    required_error: 'Selecione uma opção',
-  }),
-})
+import { useRegistryForm } from '../hooks/use-registry-form'
+import { REGISTRY_CONSTANTS } from '../constants'
 
 function RegisterForm() {
   const { t } = useTranslation(registry)
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      phone: '',
-      role: undefined,
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-  }
+  const { form, state, handleSubmit, formatPhone, togglePasswordVisibility } = useRegistryForm()
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('register.usernameLabel')}</FormLabel>
@@ -103,7 +65,54 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.passwordLabel')}</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <div className="relative">
+                  <Input 
+                    type={state.showPassword ? "text" : "password"} 
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => togglePasswordVisibility('password')}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {state.showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirmar Senha</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input 
+                    type={state.showConfirmPassword ? "text" : "password"} 
+                    placeholder="Digite a senha novamente"
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => togglePasswordVisibility('confirmPassword')}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {state.showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -117,7 +126,14 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.phoneLabel')}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input 
+                  {...field} 
+                  placeholder={REGISTRY_CONSTANTS.PHONE_FORMAT.PLACEHOLDER}
+                  onChange={(e) => {
+                    const formatted = formatPhone(e.target.value)
+                    field.onChange(formatted)
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -130,29 +146,36 @@ function RegisterForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('register.roleLabel')}</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-full">
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
                     <SelectValue placeholder={t('register.rolePlaceholder')} />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="volunteer">Voluntário</SelectItem>
-                    <SelectItem value="patient">Paciente</SelectItem>
-                    <SelectItem value="sponsor">Apoiador</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
+                </FormControl>
+                <SelectContent>
+                  {REGISTRY_CONSTANTS.ROLE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      <div className="flex flex-col">
+                        <span className="font-medium">{option.label}</span>
+                        <span className="text-sm text-muted-foreground">{option.description}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full">
-          {t('signUp')}
-        </Button>
-
-        <Button variant="outline" className="w-full">
-          {t('loginWithGoogle')}
+        <Button 
+          type="submit" 
+          className="w-full" 
+          disabled={state.isSubmitting} 
+          variant="default" 
+          size="default"
+        >
+          {state.isSubmitting ? 'Criando conta...' : t('register.submitButton')}
         </Button>
       </form>
     </Form>

@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Account Settings",
+    "subtitle": "Manage your personal information and preferences",
+    "profile": {
+      "title": "Profile Information",
+      "subtitle": "Update your personal information",
+      "profileImage": "Profile Picture",
+      "profileImageDescription": "Click the camera icon to change",
+      "name": "Full Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "(11) 99999-9999",
+      "saveButton": "Save Changes",
+      "savingButton": "Saving..."
+    },
+    "password": {
+      "title": "Change Password",
+      "subtitle": "For your security, confirm your current password",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm New Password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "updateButton": "Change Password",
+      "updatingButton": "Updating..."
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Configurações da Conta",
+    "subtitle": "Gerencie suas informações pessoais e preferências",
+    "profile": {
+      "title": "Informações do Perfil",
+      "subtitle": "Atualize suas informações pessoais",
+      "profileImage": "Foto de Perfil",
+      "profileImageDescription": "Clique no ícone da câmera para alterar",
+      "name": "Nome Completo",
+      "namePlaceholder": "Seu nome completo",
+      "email": "Email",
+      "emailPlaceholder": "seu@email.com",
+      "phone": "Telefone",
+      "phonePlaceholder": "(11) 99999-9999",
+      "saveButton": "Salvar Alterações",
+      "savingButton": "Salvando..."
+    },
+    "password": {
+      "title": "Alterar Senha",
+      "subtitle": "Para sua segurança, confirme sua senha atual",
+      "currentPassword": "Senha Atual",
+      "currentPasswordPlaceholder": "Digite sua senha atual",
+      "newPassword": "Nova Senha",
+      "newPasswordPlaceholder": "Digite a nova senha",
+      "confirmPassword": "Confirmar Nova Senha",
+      "confirmPasswordPlaceholder": "Confirme a nova senha",
+      "updateButton": "Alterar Senha",
+      "updatingButton": "Atualizando..."
+    }
+  }
+}
