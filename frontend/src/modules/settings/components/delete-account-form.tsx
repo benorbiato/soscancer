@@ -1,44 +1,44 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Button } from '@/components/ui/button.jsx';
-import { Input } from '@/components/ui/input.jsx';
-import { Label } from '@/components/ui/label.jsx';
-import { Trash2, AlertTriangle } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Button } from '@/components/ui/button.jsx'
+import { Input } from '@/components/ui/input.jsx'
+import { Label } from '@/components/ui/label.jsx'
+import { Trash2, AlertTriangle } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
 
 interface DeleteAccountFormProps {
-  isLoading: boolean;
+  isLoading: boolean
 }
 
 export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
-  const [confirmText, setConfirmText] = useState('');
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const toast = useToast();
+  const [confirmText, setConfirmText] = useState('')
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const toast = useToast()
 
   const handleDeleteAccount = async () => {
     if (confirmText !== 'DELETAR') {
-      toast.error('Erro', 'Digite "DELETAR" para confirmar a exclusão da conta');
-      return;
+      toast.error('Erro', 'Digite "DELETAR" para confirmar a exclusão da conta')
+      return
     }
 
     try {
       // Aqui você implementaria a chamada para a API de exclusão
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success('Conta excluída com sucesso!');
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      toast.success('Conta excluída com sucesso!')
       // Redirecionar para login ou home
     } catch (error) {
-      toast.error('Erro ao excluir conta', 'Tente novamente mais tarde');
+      toast.error('Erro ao excluir conta', 'Tente novamente mais tarde')
     }
-  };
+  }
 
   const handleShowConfirmation = () => {
-    setShowConfirmation(true);
-  };
+    setShowConfirmation(true)
+  }
 
   const handleCancel = () => {
-    setShowConfirmation(false);
-    setConfirmText('');
-  };
+    setShowConfirmation(false)
+    setConfirmText('')
+  }
 
   return (
     <Card className="w-full border-red-200 dark:border-red-800">
@@ -67,7 +67,7 @@ export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
                 </ul>
               </div>
             </div>
-            
+
             <Button
               onClick={handleShowConfirmation}
               variant="outline"
@@ -84,7 +84,10 @@ export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
               <p className="text-sm text-red-800 dark:text-red-200 font-medium mb-2">
                 Para confirmar a exclusão, digite <strong>DELETAR</strong> no campo abaixo:
               </p>
-              <Label htmlFor="confirmDelete" className="text-sm font-medium text-red-700 dark:text-red-300">
+              <Label
+                htmlFor="confirmDelete"
+                className="text-sm font-medium text-red-700 dark:text-red-300"
+              >
                 Digite "DELETAR" para confirmar
               </Label>
               <Input
@@ -106,12 +109,7 @@ export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
               >
                 {isLoading ? 'Excluindo...' : 'Confirmar Exclusão'}
               </Button>
-              <Button
-                onClick={handleCancel}
-                variant="outline"
-                size="default"
-                className="flex-1"
-              >
+              <Button onClick={handleCancel} variant="outline" size="default" className="flex-1">
                 Cancelar
               </Button>
             </div>
@@ -119,5 +117,5 @@ export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
         )}
       </CardContent>
     </Card>
-  );
+  )
 }

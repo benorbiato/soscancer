@@ -5,7 +5,7 @@ import { DASHBOARD_CONSTANTS } from '../constants'
 
 export function useDashboard() {
   const { user } = useAuth()
-  
+
   const [state, setState] = useState<DashboardState>({
     isLoading: false,
     cards: DASHBOARD_CONSTANTS.CARDS,
@@ -14,7 +14,7 @@ export function useDashboard() {
   useEffect(() => {
     // Aqui você poderia carregar dados específicos do dashboard
     // Por enquanto, usamos os dados estáticos das constantes
-    setState(prev => ({ ...prev, cards: DASHBOARD_CONSTANTS.CARDS }))
+    setState((prev) => ({ ...prev, cards: DASHBOARD_CONSTANTS.CARDS }))
   }, [])
 
   return {

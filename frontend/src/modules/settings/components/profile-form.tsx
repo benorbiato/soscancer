@@ -30,9 +30,7 @@ export function ProfileForm({
           <User className="h-5 w-5" />
           Informações do Perfil
         </CardTitle>
-        <CardDescription>
-          Atualize suas informações pessoais
-        </CardDescription>
+        <CardDescription>Atualize suas informações pessoais</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Foto de Perfil */}
@@ -45,35 +43,47 @@ export function ProfileForm({
         {/* Campos do Formulário */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-sm font-medium">Nome Completo</Label>
+            <Label htmlFor="name" className="text-sm font-medium">
+              Nome Completo
+            </Label>
             <Input
               value={formData.name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('name', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onInputChange('name', e.target.value)
+              }
               placeholder="Seu nome completo"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email
+            </Label>
             <Input
               type="email"
               value={formData.email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('email', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onInputChange('email', e.target.value)
+              }
               placeholder="seu@email.com"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-sm font-medium">Telefone</Label>
+            <Label htmlFor="phone" className="text-sm font-medium">
+              Telefone
+            </Label>
             <Input
               value={formData.phone}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('phone', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onInputChange('phone', e.target.value)
+              }
               placeholder="(11) 99999-9999"
             />
           </div>
         </div>
 
-        <Button 
+        <Button
           onClick={onUpdateProfile}
           disabled={isLoading}
           variant="default"

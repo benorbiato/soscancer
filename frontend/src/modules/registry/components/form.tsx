@@ -66,10 +66,7 @@ function RegisterForm() {
               <FormLabel>{t('register.passwordLabel')}</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Input 
-                    type={state.showPassword ? "text" : "password"} 
-                    {...field} 
-                  />
+                  <Input type={state.showPassword ? 'text' : 'password'} {...field} />
                   <button
                     type="button"
                     onClick={() => togglePasswordVisibility('password')}
@@ -96,10 +93,10 @@ function RegisterForm() {
               <FormLabel>Confirmar Senha</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Input 
-                    type={state.showConfirmPassword ? "text" : "password"} 
+                  <Input
+                    type={state.showConfirmPassword ? 'text' : 'password'}
                     placeholder="Digite a senha novamente"
-                    {...field} 
+                    {...field}
                   />
                   <button
                     type="button"
@@ -126,8 +123,8 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.phoneLabel')}</FormLabel>
               <FormControl>
-                <Input 
-                  {...field} 
+                <Input
+                  {...field}
                   placeholder={REGISTRY_CONSTANTS.PHONE_FORMAT.PLACEHOLDER}
                   onChange={(e) => {
                     const formatted = formatPhone(e.target.value)
@@ -168,11 +165,11 @@ function RegisterForm() {
           )}
         />
 
-        <Button 
-          type="submit" 
-          className="w-full" 
-          disabled={state.isSubmitting} 
-          variant="default" 
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={state.isSubmitting}
+          variant="default"
           size="default"
         >
           {state.isSubmitting ? 'Criando conta...' : t('register.submitButton')}

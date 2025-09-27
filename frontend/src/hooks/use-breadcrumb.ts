@@ -19,7 +19,7 @@ export function useBreadcrumb() {
         {
           label: 'Dashboard',
           isActive: true,
-        }
+        },
       ]
     }
 
@@ -32,7 +32,7 @@ export function useBreadcrumb() {
 
       // Mapear segmentos para labels legíveis
       const label = getSegmentLabel(segment)
-      
+
       items.push({
         label,
         href: isLast ? undefined : currentPath,
@@ -48,15 +48,15 @@ export function useBreadcrumb() {
 
 function getSegmentLabel(segment: string): string {
   const labelMap: Record<string, string> = {
-    'settings': 'Configurações',
-    'agenda': 'Agenda',
-    'patients': 'Pacientes',
-    'volunteers': 'Voluntários',
-    'reports': 'Relatórios',
-    'profile': 'Perfil',
-    'edit': 'Editar',
-    'create': 'Criar',
-    'view': 'Visualizar',
+    settings: 'Configurações',
+    agenda: 'Agenda',
+    patients: 'Pacientes',
+    volunteers: 'Voluntários',
+    reports: 'Relatórios',
+    profile: 'Perfil',
+    edit: 'Editar',
+    create: 'Criar',
+    view: 'Visualizar',
   }
 
   return labelMap[segment] || segment.charAt(0).toUpperCase() + segment.slice(1)

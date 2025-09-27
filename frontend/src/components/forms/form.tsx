@@ -7,21 +7,10 @@ interface FormProps extends BaseComponentProps {
   loading?: boolean
 }
 
-export function Form({ 
-  onSubmit, 
-  children, 
-  loading = false, 
-  className = '' 
-}: FormProps) {
+export function Form({ onSubmit, children, loading = false, className = '' }: FormProps) {
   return (
-    <form 
-      onSubmit={onSubmit} 
-      className={`space-y-6 ${className}`}
-      noValidate
-    >
-      <fieldset disabled={loading}>
-        {children}
-      </fieldset>
+    <form onSubmit={onSubmit} className={`space-y-6 ${className}`} noValidate>
+      <fieldset disabled={loading}>{children}</fieldset>
     </form>
   )
 }

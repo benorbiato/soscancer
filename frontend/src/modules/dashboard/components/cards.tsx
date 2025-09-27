@@ -1,4 +1,11 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card.jsx'
 import { Button } from '@/components/ui/button.jsx'
 import { Link } from 'react-router-dom'
 import { DashboardCard } from '../types'
@@ -18,12 +25,18 @@ function Cards({ card }: CardsProps) {
           </div>
           <div className="flex-1 min-w-0">
             <CardTitle className="text-lg font-semibold text-foreground group-hover:text-brand-700 dark:group-hover:text-brand-400 transition-colors duration-300 h-14 flex items-center overflow-hidden">
-              <span className="block overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+              <span
+                className="block overflow-hidden text-ellipsis"
+                style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}
+              >
                 {title}
               </span>
             </CardTitle>
             <CardDescription className="text-sm text-muted-foreground mt-1 h-10 flex items-center overflow-hidden">
-              <span className="block overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+              <span
+                className="block overflow-hidden text-ellipsis"
+                style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}
+              >
                 {subtitle}
               </span>
             </CardDescription>
@@ -38,16 +51,16 @@ function Cards({ card }: CardsProps) {
       </CardContent>
 
       <CardFooter className="pt-4 mt-auto">
-        <Button 
-          asChild 
+        <Button
+          asChild
           className="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300 group-hover:scale-105"
         >
           <Link to={url} className="flex items-center gap-2">
             <span>Acessar</span>
-            <svg 
-              className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

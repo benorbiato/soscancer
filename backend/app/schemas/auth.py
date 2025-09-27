@@ -17,6 +17,7 @@ class TokenResponse(BaseModel):
     user_id: str
     user_name: str
     user_email: str
+    user_role: str = None
 
 
 class PasswordChangeRequest(BaseModel):

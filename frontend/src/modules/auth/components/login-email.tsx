@@ -7,10 +7,12 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input.jsx'
 import { Button } from '@/components/ui/button.jsx'
 import { useAuthForm } from '../hooks/use-auth-form'
+import { useAuth } from '@/contexts/auth-context'
 
 function LoginEmail() {
   const { t } = useTranslation(auth)
   const { form, state, handleSubmit, togglePasswordVisibility } = useAuthForm()
+  const { isLoading: contextLoading } = useAuth()
 
   return (
     <Form {...form}>
@@ -35,10 +37,10 @@ function LoginEmail() {
             <FormItem>
               <FormControl>
                 <div className="relative">
-                  <Input 
-                    type={state.showPassword ? "text" : "password"} 
-                    placeholder={t('password')} 
-                    {...field} 
+                  <Input
+                    type={state.showPassword ? 'text' : 'password'}
+                    placeholder={t('password')}
+                    {...field}
                   />
                   <button
                     type="button"
@@ -58,8 +60,14 @@ function LoginEmail() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={state.isLoading} variant="default" size="default">
-          {state.isLoading ? 'Fazendo login...' : t('continueLogin')}
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={state.isLoading || contextLoading}
+          variant="default"
+          size="default"
+        >
+          {state.isLoading || contextLoading ? 'Fazendo login...' : t('continueLogin')}
         </Button>
       </form>
     </Form>

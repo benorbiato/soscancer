@@ -1,29 +1,33 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock } from 'lucide-react';
-import { Event } from '../types';
-import { EVENT_TYPES } from '../constants';
-import { formatBrazilianDate } from '@/lib/date-utils';
+import React from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Calendar, Clock } from 'lucide-react'
+import { Event } from '../types'
+import { EVENT_TYPES } from '../constants'
+import { formatBrazilianDate } from '@/lib/date-utils'
 
 interface CompactEventsProps {
-  events: Event[];
-  title: string;
-  emptyMessage?: string;
+  events: Event[]
+  title: string
+  emptyMessage?: string
 }
 
-export function CompactEvents({ events, title, emptyMessage = 'Nenhum evento encontrado' }: CompactEventsProps) {
+export function CompactEvents({
+  events,
+  title,
+  emptyMessage = 'Nenhum evento encontrado',
+}: CompactEventsProps) {
   const formatDate = (dateString: string) => {
-    return formatBrazilianDate(dateString);
-  };
+    return formatBrazilianDate(dateString)
+  }
 
   const formatTime = (time: string) => {
-    return time;
-  };
+    return time
+  }
 
   const getEventTypeInfo = (type: Event['type']) => {
-    return EVENT_TYPES[type];
-  };
+    return EVENT_TYPES[type]
+  }
 
   if (events.length === 0) {
     return (
@@ -37,7 +41,7 @@ export function CompactEvents({ events, title, emptyMessage = 'Nenhum evento enc
           </p>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -48,8 +52,8 @@ export function CompactEvents({ events, title, emptyMessage = 'Nenhum evento enc
       <CardContent>
         <div className="space-y-3">
           {events.map((event) => {
-            const typeInfo = getEventTypeInfo(event.type);
-            
+            const typeInfo = getEventTypeInfo(event.type)
+
             return (
               <div
                 key={event.id}
@@ -62,33 +66,31 @@ export function CompactEvents({ events, title, emptyMessage = 'Nenhum evento enc
                       {formatDate(event.date)}
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <Clock className="h-4 w-4" />
                     <span>{formatTime(event.time)}</span>
                   </div>
-                  
+
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                       {event.title}
                     </h4>
                     {event.location && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {event.location}
-                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{event.location}</p>
                     )}
                   </div>
                 </div>
-                
+
                 <Badge className={`${typeInfo.color} border-0 text-xs`}>
                   <span className="mr-1">{typeInfo.icon}</span>
                   <span>{typeInfo.label}</span>
                 </Badge>
               </div>
-            );
+            )
           })}
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

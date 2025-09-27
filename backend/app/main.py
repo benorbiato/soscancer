@@ -10,6 +10,8 @@ from app.middleware.security import (
     RateLimitMiddleware,
     RequestLoggingMiddleware
 )
+from app.middleware.auth import create_auth_middleware
+from app.middleware.permissions import create_permission_middleware
 
 # Configure logging
 logging.basicConfig(
@@ -42,6 +44,12 @@ def create_application() -> FastAPI:
     
     # Request logging
     application.add_middleware(RequestLoggingMiddleware)
+    
+    # Authentication middleware (temporarily disabled)
+    # application.add_middleware(create_auth_middleware())
+    
+    # Permission middleware (temporarily disabled)
+    # application.add_middleware(create_permission_middleware())
     
     # Trusted host middleware
     application.add_middleware(
