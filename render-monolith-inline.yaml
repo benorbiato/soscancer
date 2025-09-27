@@ -2,7 +2,13 @@ services:
   - type: web
     name: soscancer-monolith
     env: node
-    buildCommand: bash build.sh
+    buildCommand: |
+      echo "🏗️ Building monolith application..."
+      echo "📦 Building frontend..."
+      cd frontend && npm install && npm run build && cd ..
+      echo "🔧 Building backend..."
+      cd backend && npm install && npm run build && cd ..
+      echo "✅ Build completed successfully!"
     startCommand: cd backend && npm run start:prod
     plan: starter
     healthCheckPath: /api/health
