@@ -4,6 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 
@@ -12,7 +13,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   // Security middleware
-  app.use(helmet());
+  app.use(helmet({
+    contentSecurityPolicy: false, // Desabilitado para servir arquivos estáticos
+  }));
   app.use(compression());
 
   // Rate limiting
@@ -61,6 +64,19 @@ async function bootstrap() {
     
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
+  }
+
+  // Servir arquivos estáticos do frontend
+  if (configService.get('NODE_ENV') === 'production') {
+    const express = require('express');
+    app.use(express.static(join(__dirname, '../../frontend/dist')));
+    
+    // Fallback para SPA - todas as rotas não-API servem o index.html
+    app.use('*', (req: any, res: any) => {
+      if (!req.path.startsWith('/api/')) {
+        res.sendFile(join(__dirname, '../../frontend/dist/index.html'));
+      }
+    });
   }
 
   const port = configService.get('PORT', 3000);
