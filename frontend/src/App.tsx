@@ -1,7 +1,7 @@
 import '../app/global.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/auth-context'
-import { ToastProvider } from './components/ui/toast'
+import { ToastProvider } from './components/ui/toast.jsx'
 import { HomeView, LoginView, RegisterView, DashboardView } from './pages'
 import Settings from './modules/settings'
 import Agenda from './pages/agenda'

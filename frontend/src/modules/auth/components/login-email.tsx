@@ -3,9 +3,9 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { auth } from '@/common/locales'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form.tsx'
+import { Input } from '@/components/ui/input.jsx'
+import { Button } from '@/components/ui/button.jsx'
 import { useAuthForm } from '../hooks/use-auth-form'
 
 function LoginEmail() {

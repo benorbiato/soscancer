@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card'
+import { Card } from '@/components/ui/card.jsx'
 import { Headline, RegisterForm } from './components'
 
 import { useTranslation } from 'react-i18next'

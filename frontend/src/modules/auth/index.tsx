@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card'
+import { Card } from '@/components/ui/card.jsx'
 import { Headline } from './components/headline'
 import { SocialMedias } from './components/social-medias'
 import { LoginEmail } from './components/login-email'
