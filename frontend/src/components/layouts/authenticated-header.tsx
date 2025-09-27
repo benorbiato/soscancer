@@ -70,6 +70,13 @@ function AuthenticatedHeader() {
             Agenda
           </Link>
 
+          <Link
+            to="/settings"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Configurações
+          </Link>
+
           <button 
             onClick={toggleTheme} 
             className="flex items-center p-2 rounded-md hover:bg-muted transition-colors" 
@@ -147,6 +154,14 @@ function AuthenticatedHeader() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Agenda
+              </Link>
+
+              <Link
+                to="/settings"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Configurações
               </Link>
             </nav>
 

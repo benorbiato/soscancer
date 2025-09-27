@@ -5,6 +5,7 @@ export interface User {
   email: string
   phone?: string
   role?: string
+  profileImage?: string
   created_at?: string
   updated_at?: string
 }

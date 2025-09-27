@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
 import { auth } from '@/common/locales'
@@ -32,6 +33,7 @@ function LoginEmail() {
   const { t } = useTranslation(auth)
   const { login, isLoading } = useAuth()
   const toast = useToast()
+  const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,7 +76,24 @@ function LoginEmail() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder={t('password')} {...field} />
+                <div className="relative">
+                  <Input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder={t('password')} 
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

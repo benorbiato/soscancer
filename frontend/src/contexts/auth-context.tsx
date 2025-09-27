@@ -11,6 +11,7 @@ type AuthAction =
   | { type: 'LOGOUT' }
   | { type: 'REFRESH_TOKEN'; payload: string }
   | { type: 'SET_USER'; payload: User }
+  | { type: 'UPDATE_USER'; payload: Partial<User> }
 
 // Initial state
 const initialState: AuthState = {
@@ -71,6 +72,11 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         ...state,
         user: action.payload,
       }
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        user: state.user ? { ...state.user, ...action.payload } : null,
+      }
     default:
       return state
   }
@@ -81,6 +87,7 @@ interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>
   logout: () => void
   refreshAuthToken: () => Promise<void>
+  updateUser: (userData: Partial<User>) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -182,11 +189,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  const updateUser = async (userData: Partial<User>) => {
+    try {
+      // Aqui você implementaria a chamada para a API de atualização
+      // Por enquanto, apenas atualizamos o estado local
+      dispatch({ type: 'UPDATE_USER', payload: userData })
+      
+      // Atualizar localStorage se necessário
+      if (userData.name) {
+        localStorage.setItem('user_name', userData.name)
+      }
+      if (userData.email) {
+        localStorage.setItem('user_email', userData.email)
+      }
+      
+      toast.success('Perfil atualizado com sucesso!')
+    } catch (error) {
+      toast.error('Erro ao atualizar perfil', 'Tente novamente mais tarde')
+      throw error
+    }
+  }
+
   const value: AuthContextType = {
     ...state,
     login,
     logout,
     refreshAuthToken,
+    updateUser,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

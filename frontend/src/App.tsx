@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './contexts/auth-context'
 import { ToastProvider } from './components/ui/toast'
 import { HomeView, LoginView, RegisterView, DashboardView } from './pages'
+import Settings from './pages/settings'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/login" element={<LoginView />} />
             <Route path="/register" element={<RegisterView />} />
             <Route path="/dashboard" element={<DashboardView />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

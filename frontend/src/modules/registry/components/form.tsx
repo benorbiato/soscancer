@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
 import { registry } from '@/common/locales'
@@ -45,19 +46,39 @@ const formSchema = z.object({
     .nonempty({ message: 'A senha é obrigatória.' })
     .min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }),
 
+  confirmPassword: z
+    .string()
+    .nonempty({ message: 'A confirmação de senha é obrigatória.' }),
+
   phone: z.string().optional(),
 
   role: z.enum(['volunteer', 'patient', 'sponsor'], {
     message: 'Selecione uma opção',
   }),
+}).refine((data) => {
+  return data.password === data.confirmPassword
+}, {
+  message: "As senhas não coincidem",
+  path: ["confirmPassword"],
 })
 
 function RegisterForm() {
   const { t } = useTranslation(registry)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const toast = useToast()
   const { login } = useAuth()
   const navigate = useNavigate()
+
+  // Função para formatar telefone
+  const formatPhone = (value: string) => {
+    const numbers = value.replace(/\D/g, '')
+    if (numbers.length <= 2) return numbers
+    if (numbers.length <= 6) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`
+    if (numbers.length <= 10) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,6 +86,7 @@ function RegisterForm() {
       name: '',
       email: '',
       password: '',
+      confirmPassword: '',
       phone: '',
       role: undefined,
     },
@@ -142,7 +164,54 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.passwordLabel')}</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <div className="relative">
+                  <Input 
+                    type={showPassword ? "text" : "password"} 
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirmar Senha</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    placeholder="Digite a senha novamente"
+                    {...field} 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -156,7 +225,14 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>{t('register.phoneLabel')}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input 
+                  {...field} 
+                  placeholder="(11) 99999-9999"
+                  onChange={(e) => {
+                    const formatted = formatPhone(e.target.value)
+                    field.onChange(formatted)
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
