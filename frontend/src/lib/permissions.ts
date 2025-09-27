@@ -70,8 +70,6 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
   [UserRole.VOLUNTEER]: [
     // Volunteers can access agenda, dashboard, and basic settings
     Permission.VIEW_AGENDA,
-    Permission.CREATE_EVENTS,
-    Permission.UPDATE_EVENTS,
     Permission.VIEW_DASHBOARD,
     Permission.VIEW_SETTINGS,
     Permission.UPDATE_PROFILE,
