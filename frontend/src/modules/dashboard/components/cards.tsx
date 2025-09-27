@@ -1,14 +1,14 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
+import { DashboardCard } from '../types'
 
-type CardsProps = {
-  title: string
-  subtitle: string
-  url: string
+interface CardsProps {
+  card: DashboardCard
 }
 
-function Cards({ title, subtitle, url }: CardsProps) {
+function Cards({ card }: CardsProps) {
+  const { title, subtitle, url } = card
   return (
     <Card className="w-full group hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-brand-50 to-brand-100 dark:from-card dark:to-card hover:from-brand-100 hover:to-brand-200 dark:hover:from-card dark:hover:to-card">
       <CardHeader className="pb-4">

@@ -3,6 +3,8 @@ import { Moon, Sun, Menu, X, User, LogOut, Settings } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/auth-context'
 import { Button } from '@/components/ui/button'
+import { Breadcrumb } from '@/components/ui/breadcrumb'
+import { useBreadcrumb } from '@/hooks/use-breadcrumb'
 
 function isThemeSetToDark(): boolean {
   if (typeof window === 'undefined') return false
@@ -18,6 +20,7 @@ function AuthenticatedHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const { breadcrumbItems } = useBreadcrumb()
 
   useEffect(() => {
     if (isDarkMode) {
@@ -40,8 +43,9 @@ function AuthenticatedHeader() {
   }
 
   return (
-    <header className="bg-background/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <>
+      <header className="bg-background/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link
             to="/dashboard"
@@ -179,7 +183,17 @@ function AuthenticatedHeader() {
           </div>
         </div>
       )}
-    </header>
+      </header>
+      
+      {/* Breadcrumb */}
+      {breadcrumbItems.length > 0 && (
+        <div className="bg-muted/30 border-b border-border/30">
+          <div className="max-w-7xl mx-auto px-4 py-2">
+            <Breadcrumb items={breadcrumbItems} />
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

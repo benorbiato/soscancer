@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './contexts/auth-context'
 import { ToastProvider } from './components/ui/toast'
 import { HomeView, LoginView, RegisterView, DashboardView } from './pages'
-import Settings from './pages/settings'
+import Settings from './modules/settings'
+import Agenda from './pages/agenda'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/register" element={<RegisterView />} />
             <Route path="/dashboard" element={<DashboardView />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/agenda" element={<Agenda />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

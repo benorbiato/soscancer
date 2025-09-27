@@ -1,30 +1,25 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { dashboard } from '@/common/locales'
-import { Cards } from '@/modules/dashboard/components/cards'
+import { CardsList } from '@/modules/dashboard/components/cards-list'
 import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
+import { useDashboard } from '@/modules/dashboard/hooks/use-dashboard'
 
 function DashboardView() {
   const { t } = useTranslation(dashboard)
-
-  const cards = [
-    { title: t('cards.card1.title'), subtitle: t('cards.card1.subtitle'), url: '/feature1' },
-    { title: t('cards.card2.title'), subtitle: t('cards.card2.subtitle'), url: '/feature2' },
-    { title: t('cards.card3.title'), subtitle: t('cards.card3.subtitle'), url: '/feature3' },
-    { title: t('cards.card4.title'), subtitle: t('cards.card4.subtitle'), url: '/feature4' },
-    { title: t('cards.card5.title'), subtitle: t('cards.card5.subtitle'), url: '/feature5' },
-    { title: t('cards.card6.title'), subtitle: t('cards.card6.subtitle'), url: '/feature6' },
-  ]
+  const { state } = useDashboard()
 
   return (
     <div className="min-h-screen bg-background">
       <AuthenticatedHeader />
-      <div className="flex h-[calc(100vh-73px)] items-center justify-center overflow-hidden">
-        <div className="grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
-          {cards.map((card, index) => (
-            <Cards key={index} title={card.title} subtitle={card.subtitle} url={card.url} />
-          ))}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground mt-2">
+            Gerencie suas atividades e acesse as funcionalidades
+          </p>
         </div>
+        <CardsList cards={state.cards} />
       </div>
     </div>
   )
