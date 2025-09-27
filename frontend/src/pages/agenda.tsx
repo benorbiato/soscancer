@@ -56,15 +56,12 @@ export default function Agenda() {
           <div className="mt-6">
             <EventCards
               events={state.selectedDateEvents}
-              title={`${t('events')} de ${new Date(state.selectedDate).toLocaleDateString(
-                'pt-BR',
-                {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                },
-              )}`}
+              title={`${t('events')} de ${new Date(state.selectedDate).toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}`}
               emptyMessage={t('noEvents')}
             />
           </div>

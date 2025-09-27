@@ -1,4 +1,11 @@
-import { DashboardCard } from '../types'
+import {
+  DashboardCard,
+  UpcomingEvent,
+  BalanceData,
+  ProjectStatsData,
+  NewsItem,
+  QuickAction,
+} from '../types'
 
 export const DASHBOARD_CONSTANTS = {
   CARDS: [
@@ -39,6 +46,116 @@ export const DASHBOARD_CONSTANTS = {
       url: '/support',
     },
   ] as DashboardCard[],
+  EVENTS: [
+    {
+      id: 'event1',
+      title: 'Reunião do Grupo',
+      description: 'Encontro mensal dos voluntários.',
+      date: '15 de Outubro, 2025 - 19:30',
+      location: 'Centro de Apoio SOS Câncer',
+      type: 'normal' as const,
+    },
+    {
+      id: 'event2',
+      title: 'Leilão Beneficente',
+      description: 'Leilão beneficente para ajudar os pacientes.',
+      date: '08 de Outubro, 2025 - 10:00',
+      location: 'Praça da Cidade',
+      type: 'normal' as const,
+    },
+  ] as UpcomingEvent[],
+  BALANCE: {
+    totalRaised: 125000,
+    monthlyGoal: 150000,
+    donorsCount: 342,
+    growthRate: 12.5,
+  } as BalanceData,
+  STATS: {
+    patientsHelped: 1250,
+    eventsHeld: 45,
+    volunteers: 78,
+    materialsDistributed: 3200,
+    supportCalls: 890,
+    citiesReached: 12,
+  } as ProjectStatsData,
+  NEWS: [
+    {
+      id: 'news1',
+      title: 'Nova parceria com hospital local',
+      summary:
+        'Firmamos uma parceria importante com o Hospital Regional para ampliar nosso atendimento.',
+      date: '15 de Outubro, 2025',
+      category: 'announcement' as const,
+      readMoreUrl: '/news/parceria-hospital',
+    },
+    {
+      id: 'news2',
+      title: 'Meta mensal de doações atingida!',
+      summary: 'Conseguimos atingir nossa meta de arrecadação para o mês de setembro.',
+      date: '10 de Outubro, 2025',
+      category: 'achievement' as const,
+    },
+    {
+      id: 'news3',
+      title: 'Workshop de nutrição oncológica',
+      summary:
+        'Evento gratuito para pacientes e familiares sobre alimentação durante o tratamento.',
+      date: '08 de Outubro, 2025',
+      category: 'event' as const,
+      readMoreUrl: '/events/workshop-nutricao',
+    },
+  ] as NewsItem[],
+  QUICK_ACTIONS: [
+    {
+      id: 'support',
+      title: 'Precisa de Apoio?',
+      description: 'Fale conosco',
+      icon: 'Phone',
+      url: '/support',
+      variant: 'default' as const,
+    },
+    {
+      id: 'volunteer',
+      title: 'Seja Voluntário',
+      description: 'Participe do nosso time',
+      icon: 'Users',
+      url: '/volunteer',
+      variant: 'secondary' as const,
+    },
+    {
+      id: 'materials',
+      title: 'Materiais Educativos',
+      description: 'Baixe gratuitamente',
+      icon: 'FileText',
+      url: '/materials',
+      variant: 'outline' as const,
+    },
+    {
+      id: 'events',
+      title: 'Próximos Eventos',
+      description: 'Veja nossa agenda',
+      icon: 'Calendar',
+      url: '/events',
+      variant: 'outline' as const,
+    },
+    {
+      id: 'donate',
+      title: 'Fazer Doação',
+      description: 'Ajude nossa causa',
+      icon: 'Heart',
+      url: '/donate',
+      variant: 'default' as const,
+    },
+    {
+      id: 'whatsapp',
+      title: 'WhatsApp',
+      description: 'Contato direto',
+      icon: 'MessageCircle',
+      url: 'https://wa.me/5511999999999',
+      variant: 'outline' as const,
+      isExternal: true,
+    },
+  ] as QuickAction[],
   MESSAGES: {
     WELCOME: 'Bem-vindo ao dashboard',
     LOADING: 'Carregando dashboard...',

@@ -19,20 +19,11 @@ export function Values() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={value.icon}
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={value.icon} />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-card-foreground">
-              {t(value.title)}
-            </h3>
-            <p className="text-muted-foreground">
-              {t(value.description)}
-            </p>
+            <h3 className="text-xl font-semibold mb-2 text-card-foreground">{t(value.title)}</h3>
+            <p className="text-muted-foreground">{t(value.description)}</p>
           </div>
         ))}
       </div>

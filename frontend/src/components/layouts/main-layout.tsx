@@ -14,9 +14,7 @@ export function MainLayout({ children, className = '' }: MainLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {isAuthenticated ? <AuthenticatedHeader /> : <UnauthenticatedHeader />}
-      <div className={`max-w-7xl mx-auto px-4 py-8 ${className}`}>
-        {children}
-      </div>
+      <div className={`max-w-7xl mx-auto px-4 py-8 ${className}`}>{children}</div>
     </div>
   )
 }

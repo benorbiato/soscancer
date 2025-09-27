@@ -10,12 +10,8 @@ export function Mission() {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div>
           <h2 className="text-3xl font-bold text-foreground mb-6">{t('ourMission')}</h2>
-          <p className="text-lg text-muted-foreground mb-4">
-            {t('missionText1')}
-          </p>
-          <p className="text-lg text-muted-foreground">
-            {t('missionText2')}
-          </p>
+          <p className="text-lg text-muted-foreground mb-4">{t('missionText1')}</p>
+          <p className="text-lg text-muted-foreground">{t('missionText2')}</p>
         </div>
         <div className="bg-card p-8 rounded-lg shadow-lg border">
           <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -36,9 +32,7 @@ export function Mission() {
           <h3 className="text-2xl font-semibold text-center mb-4 text-card-foreground">
             {t('careWithLove')}
           </h3>
-          <p className="text-center text-muted-foreground">
-            {t('careWithLoveText')}
-          </p>
+          <p className="text-center text-muted-foreground">{t('careWithLoveText')}</p>
         </div>
       </div>
     </div>
