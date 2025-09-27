@@ -7,7 +7,7 @@ import { UserRole } from '../common/enums/user-role.enum';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const USERS_DB_PATH = path.join(__dirname, '../../../data/users.json');
+const USERS_DB_PATH = path.join(process.cwd(), 'data/users.json');
 
 @Injectable()
 export class UsersService {
@@ -34,6 +34,11 @@ export class UsersService {
   }
 
   private saveUsers() {
+    // Ensure the data directory exists
+    const dataDir = path.dirname(USERS_DB_PATH);
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
     fs.writeFileSync(USERS_DB_PATH, JSON.stringify({ users: this.users }, null, 2), 'utf8');
   }
 
@@ -91,9 +96,7 @@ export class UsersService {
     const user = this.users[userIndex];
     let hashedPassword = user.hashedPassword;
 
-    if (updateUserDto.password) {
-      hashedPassword = await bcrypt.hash(updateUserDto.password, 12);
-    }
+    // Password updates are handled separately through changePassword method
 
     const updatedUser: User = {
       ...user,
@@ -115,6 +118,26 @@ export class UsersService {
     if (this.users.length === initialLength) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
+    this.saveUsers();
+  }
+
+  async changePassword(id: string, changePasswordDto: any): Promise<void> {
+    const userIndex = this.users.findIndex(u => u.id === id);
+    if (userIndex === -1) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    const user = this.users[userIndex];
+    const isCurrentPasswordValid = await bcrypt.compare(changePasswordDto.current_password, user.hashedPassword);
+    
+    if (!isCurrentPasswordValid) {
+      throw new BadRequestException('Current password is incorrect');
+    }
+
+    const newHashedPassword = await bcrypt.hash(changePasswordDto.new_password, 12);
+    this.users[userIndex].hashedPassword = newHashedPassword;
+    this.users[userIndex].updatedAt = new Date();
+    
     this.saveUsers();
   }
 }
