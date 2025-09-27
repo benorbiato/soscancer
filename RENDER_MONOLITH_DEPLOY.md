@@ -234,18 +234,24 @@ echo "🏗️ Building monolith application..." && echo "📦 Building frontend.
 
 ### 3. Variáveis de Ambiente
 
-Configure as seguintes variáveis de ambiente:
+Configure as seguintes variáveis de ambiente no Render:
 
 ```
 NODE_ENV=production
 PORT=3000
-JWT_SECRET=your_super_secret_jwt_key_here
-JWT_EXPIRES_IN=7d
 API_VERSION=v1
+JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
+JWT_EXPIRES_IN=7d
 ALLOWED_ORIGINS=https://soscancer-monolith.onrender.com
 RATE_LIMIT_WINDOW_MS=60000
 RATE_LIMIT_MAX_REQUESTS=60
+FRONTEND_URL=https://soscancer-monolith.onrender.com
 ```
+
+**⚠️ IMPORTANTE**: 
+- Substitua `your-super-secret-jwt-key-here-make-it-long-and-random` por uma chave secreta forte
+- Use pelo menos 32 caracteres aleatórios
+- Exemplo: `JWT_SECRET=abc123def456ghi789jkl012mno345pqr678stu901vwx234yz`
 
 ### 4. Deploy
 
