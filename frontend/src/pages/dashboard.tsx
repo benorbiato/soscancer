@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { dashboard } from '@/common/locales'
 import { Cards } from '@/modules/dashboard/components/cards'
+import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
 
 function DashboardView() {
   const { t } = useTranslation(dashboard)
@@ -16,11 +17,14 @@ function DashboardView() {
   ]
 
   return (
-    <div className="flex h-screen items-center justify-center overflow-hidden">
-      <div className="grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
-        {cards.map((card, index) => (
-          <Cards key={index} title={card.title} subtitle={card.subtitle} url={card.url} />
-        ))}
+    <div className="min-h-screen bg-background">
+      <AuthenticatedHeader />
+      <div className="flex h-[calc(100vh-73px)] items-center justify-center overflow-hidden">
+        <div className="grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
+          {cards.map((card, index) => (
+            <Cards key={index} title={card.title} subtitle={card.subtitle} url={card.url} />
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/contexts/auth-context'
 import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
+import { UnauthenticatedHeader } from '@/components/layouts/unauthenticated-header'
+import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
 
 function HomeView() {
   const { t } = useTranslation()
@@ -19,6 +21,7 @@ function HomeView() {
 
   return (
     <div className="min-h-screen bg-background">
+      {isAuthenticated ? <AuthenticatedHeader /> : <UnauthenticatedHeader />}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
@@ -37,6 +40,7 @@ function HomeView() {
               <Button 
                 onClick={() => navigate('/dashboard')}
                 size="lg"
+                variant="default"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 Acessar Dashboard
@@ -47,6 +51,7 @@ function HomeView() {
               <Button 
                 onClick={() => navigate('/login')}
                 size="lg"
+                variant="default"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 Fazer Login

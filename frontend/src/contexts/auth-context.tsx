@@ -30,13 +30,14 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         isLoading: true,
       }
     case 'LOGIN_SUCCESS':
+      const newUser = {
+        id: action.payload.user_id,
+        name: action.payload.user_name,
+        email: action.payload.user_email,
+      }
       return {
         ...state,
-        user: {
-          id: action.payload.user_id,
-          name: action.payload.user_name,
-          email: action.payload.user_email,
-        },
+        user: newUser,
         token: action.payload.access_token,
         refreshToken: action.payload.refresh_token,
         isAuthenticated: true,
@@ -95,31 +96,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Load auth state from localStorage on mount
   useEffect(() => {
-    const token = localStorage.getItem('access_token')
-    const refreshToken = localStorage.getItem('refresh_token')
-    const userStr = localStorage.getItem('user')
+    // Check for the actual keys in localStorage
+    const userId = localStorage.getItem('user_id')
+    const userName = localStorage.getItem('user_name')
+    const userEmail = localStorage.getItem('user_email')
 
-    if (token && refreshToken && userStr) {
-      try {
-        const user = JSON.parse(userStr)
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: {
-            access_token: token,
-            refresh_token: refreshToken,
-            user_id: user.id,
-            user_name: user.name,
-            user_email: user.email,
-            token_type: 'bearer',
-          },
-        })
-      } catch (error) {
-        // Clear invalid data
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
-        localStorage.removeItem('user')
-        dispatch({ type: 'LOGOUT' })
+    if (userId && userName && userEmail) {
+      const user = {
+        id: userId,
+        name: userName,
+        email: userEmail,
       }
+      
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: {
+          access_token: 'stored_token', // We don't have the actual token stored
+          refresh_token: 'stored_refresh_token',
+          user_id: userId,
+          user_name: userName,
+          user_email: userEmail,
+          token_type: 'bearer',
+        },
+      })
     } else {
       dispatch({ type: 'LOGOUT' })
     }
@@ -141,17 +140,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (email: string, password: string) => {
     try {
       dispatch({ type: 'LOGIN_START' })
-      console.log('Attempting login with:', { email, password: '***' })
       const response = await loginUser({ email, password })
-      console.log('Login response:', response)
       dispatch({ type: 'LOGIN_SUCCESS', payload: response })
       toast.success('Login realizado com sucesso!', `Bem-vindo, ${response.user_name}`)
       
       // Redirect to dashboard after successful login
-      console.log('Redirecting to dashboard...')
       setTimeout(() => {
         window.location.href = '/dashboard'
-        console.log('Navigation called')
       }, 100)
     } catch (error) {
       console.error('Login error details:', {

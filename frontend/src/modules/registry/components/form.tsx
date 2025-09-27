@@ -26,6 +26,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { createUser } from '@/lib/api/users'
 import { useToast } from '@/hooks/use-toast'
+import { useAuth } from '@/contexts/auth-context'
+import { useNavigate } from 'react-router-dom'
 
 const formSchema = z.object({
   name: z
@@ -54,6 +56,8 @@ function RegisterForm() {
   const { t } = useTranslation(registry)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,7 +83,18 @@ function RegisterForm() {
       }
       
       const response = await createUser(userData)
-      toast.success('Usuário criado com sucesso!', `ID: ${response.id}`)
+      toast.success('Usuário criado com sucesso!', `Bem-vindo, ${response.name}!`)
+      
+      // Auto-login after successful registration
+      try {
+        await login(values.email, values.password)
+        navigate('/dashboard')
+      } catch (loginError) {
+        console.error('Erro no login automático:', loginError)
+        // If auto-login fails, just show success message
+        toast.info('Usuário criado!', 'Faça login para continuar')
+      }
+      
       form.reset()
     } catch (error) {
       console.error('Erro ao criar usuário:', error)

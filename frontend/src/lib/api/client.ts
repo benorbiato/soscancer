@@ -118,15 +118,6 @@ export async function apiFetch<T = any>(path: string, options: RequestInit & { b
     body: options.body ? JSON.stringify(options.body) : undefined
   }
   
-  // Debug logging
-  console.log('API Request:', {
-    url,
-    method: requestOptions.method,
-    headers: requestOptions.headers,
-    body: requestOptions.body,
-    bodyType: typeof requestOptions.body,
-    bodyString: requestOptions.body
-  })
   
   return fetchWithRetry(url, requestOptions)
 }
