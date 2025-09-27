@@ -66,8 +66,8 @@ async function bootstrap() {
     SwaggerModule.setup('docs', app, document);
   }
 
-  // Servir arquivos estáticos do frontend
-  if (configService.get('NODE_ENV') === 'production') {
+  // Servir arquivos estáticos do frontend (apenas se SERVE_FRONTEND não for 'false')
+  if (configService.get('NODE_ENV') === 'production' && configService.get('SERVE_FRONTEND') !== 'false') {
     const express = require('express');
     app.use(express.static(join(__dirname, '../../frontend/dist')));
     

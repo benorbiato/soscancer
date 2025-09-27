@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: soscancer-monolith
+    name: soscancer-backend-only
     env: node
-    nodeVersion: 20.18.0
-    buildCommand: bash build.sh
+    nodeVersion: 18.19.1
+    buildCommand: bash build-backend-only.sh
     startCommand: cd backend && npm run start:prod
     plan: starter
     healthCheckPath: /api/health
@@ -12,6 +12,20 @@ services:
         value: production
       - key: PORT
         value: 3000
+      - key: API_VERSION
+        value: v1
+      - key: JWT_SECRET
+        value: your-super-secret-jwt-key-here-make-it-long-and-random
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 60000
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 60
+      - key: SERVE_FRONTEND
+        value: "false"
     headers:
       - path: /api/*
         name: Access-Control-Allow-Origin
@@ -22,9 +36,3 @@ services:
       - path: /api/*
         name: Access-Control-Allow-Headers
         value: "Content-Type, Authorization"
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=31536000, immutable
-      - path: /index.html
-        name: Cache-Control
-        value: public, max-age=0, must-revalidate

@@ -219,17 +219,26 @@ git push origin main
 4. Configure:
    - **Name**: `soscancer-monolith`
    - **Environment**: `Node`
-   - **Build Command**: `bash build.sh` (ou use o comando inline abaixo)
+   - **Node Version**: `20.18.0` (IMPORTANTE: Use esta versão específica)
+   - **Build Command**: `bash build-simple.sh` (ou use o comando inline abaixo)
    - **Start Command**: `cd backend && npm run start:prod`
-   - **Node Version**: `18`
    - **Plan**: `Starter` (gratuito)
 
-#### Alternativa - Comando Inline (se o script falhar):
+#### Opções de Build Command:
 
-Se o script `build.sh` não funcionar, use este comando inline no campo "Build Command":
+**Opção 1: Script Simples (Recomendado)**
+```
+bash build-simple.sh
+```
 
-```bash
-echo "🏗️ Building monolith application..." && echo "📦 Building frontend..." && cd frontend && npm install && npm run build && cd .. && echo "🔧 Building backend..." && cd backend && npm install && npm run build && cd .. && echo "✅ Build completed successfully!"
+**Opção 2: Comando Inline (Fallback)**
+```
+echo "🏗️ Building monolith application..." && echo "📦 Building frontend..." && cd frontend && npm install --legacy-peer-deps --no-optional && npm run build && cd .. && echo "🔧 Building backend..." && cd backend && npm install --no-optional && npm run build && cd .. && echo "✅ Build completed successfully!"
+```
+
+**Opção 3: Script Robusto (Se as outras falharem)**
+```
+bash build.sh
 ```
 
 ### 3. Variáveis de Ambiente
