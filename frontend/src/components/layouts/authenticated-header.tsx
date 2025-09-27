@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Moon, Sun, Menu, X, User, LogOut, Settings } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/auth-context'
-import { Button } from '@/components/ui/button.jsx'
-import { Breadcrumb } from '@/components/ui/breadcrumb.tsx'
+import { Breadcrumb } from '@/common/components/breadcrumb'
+import { NavigationMenu, MobileMenu, ThemeToggle, LogoutButton } from '@/common/components/header'
 import { useBreadcrumb } from '@/hooks/use-breadcrumb'
-import { Permission } from '@/lib/permissions'
-import { PermissionGuard } from '@/components/permission-guard'
 
 function isThemeSetToDark(): boolean {
   if (typeof window === 'undefined') return false
@@ -55,77 +53,18 @@ function AuthenticatedHeader() {
             >
               SOS Cancer
             </Link>
-            <span className="text-sm text-muted-foreground hidden md:block">
-              Olá, {user?.name || user?.email?.split('@')[0] || 'Usuário'}
-            </span>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <PermissionGuard permission={Permission.VIEW_DASHBOARD}>
-              <Link
-                to="/dashboard"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Dashboard
-              </Link>
-            </PermissionGuard>
-
-            <PermissionGuard permission={Permission.VIEW_AGENDA}>
-              <Link
-                to="/agenda"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Agenda
-              </Link>
-            </PermissionGuard>
-
-            <PermissionGuard permission={Permission.VIEW_SETTINGS}>
-              <Link
-                to="/settings"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Configurações
-              </Link>
-            </PermissionGuard>
-
-            <button
-              onClick={toggleTheme}
-              className="flex items-center p-2 rounded-md hover:bg-muted transition-colors"
-              aria-label="Toggle theme"
-            >
-              {isDarkMode ? (
-                <Moon className="size-4 text-muted-foreground" />
-              ) : (
-                <Sun className="size-4 text-muted-foreground" />
-              )}
-            </button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleLogout}
-              className="flex items-center gap-2 border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 dark:border-brand-600 dark:text-brand-300 dark:hover:bg-brand-900 dark:hover:border-brand-500 dark:hover:text-brand-200"
-            >
-              <LogOut className="size-4" />
-              Sair
-            </Button>
-          </nav>
+          <div className="hidden md:flex items-center gap-6">
+            <NavigationMenu />
+            <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+            <LogoutButton onLogout={handleLogout} />
+          </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="flex items-center p-2 rounded-md hover:bg-muted transition-colors"
-              aria-label="Toggle theme"
-            >
-              {isDarkMode ? (
-                <Moon className="size-4 text-muted-foreground" />
-              ) : (
-                <Sun className="size-4 text-muted-foreground" />
-              )}
-            </button>
-
+            <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-md hover:bg-muted transition-colors"
@@ -141,62 +80,12 @@ function AuthenticatedHeader() {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-sm">
-            <div className="px-4 py-4 space-y-4">
-              <div className="flex items-center gap-3 pb-3 border-b border-border/50">
-                <User className="size-4 text-muted-foreground" />
-                <span className="text-sm text-foreground">
-                  Olá, {user?.name || user?.email?.split('@')[0] || 'Usuário'}
-                </span>
-              </div>
-
-              <nav className="space-y-2">
-                <PermissionGuard permission={Permission.VIEW_DASHBOARD}>
-                  <Link
-                    to="/dashboard"
-                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
-                </PermissionGuard>
-
-                <PermissionGuard permission={Permission.VIEW_AGENDA}>
-                  <Link
-                    to="/agenda"
-                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Agenda
-                  </Link>
-                </PermissionGuard>
-
-                <PermissionGuard permission={Permission.VIEW_SETTINGS}>
-                  <Link
-                    to="/settings"
-                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Configurações
-                  </Link>
-                </PermissionGuard>
-              </nav>
-
-              <div className="pt-3 border-t border-border/50">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleLogout}
-                  className="w-full flex items-center gap-2 border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 dark:border-brand-600 dark:text-brand-300 dark:hover:bg-brand-900 dark:hover:border-brand-500 dark:hover:text-brand-200"
-                >
-                  <LogOut className="size-4" />
-                  Sair
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+        <MobileMenu
+          isOpen={isMenuOpen}
+          user={user}
+          onClose={() => setIsMenuOpen(false)}
+          onLogout={handleLogout}
+        />
       </header>
 
       {/* Breadcrumb */}

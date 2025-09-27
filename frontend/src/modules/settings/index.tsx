@@ -1,4 +1,4 @@
-import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
+import { MainLayout } from '@/components/layouts/main-layout'
 import { ProfileForm, PasswordForm, DeleteAccountForm } from './components'
 import { useSettings } from './hooks/use-settings'
 
@@ -10,13 +10,12 @@ export default function Settings() {
     handleImageUpload,
     handleUpdateProfile,
     handleUpdatePassword,
+    handleDeleteAccount,
     togglePasswordVisibility,
   } = useSettings()
 
   return (
-    <div className="min-h-screen bg-background">
-      <AuthenticatedHeader />
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <MainLayout>
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground">Configurações da Conta</h1>
           <p className="text-muted-foreground mt-2">
@@ -45,9 +44,11 @@ export default function Settings() {
             onUpdatePassword={handleUpdatePassword}
           />
 
-          <DeleteAccountForm isLoading={state.isLoading} />
+          <DeleteAccountForm 
+            isLoading={state.isLoading} 
+            onDeleteAccount={handleDeleteAccount}
+          />
         </div>
-      </div>
-    </div>
+    </MainLayout>
   )
 }

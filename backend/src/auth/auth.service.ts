@@ -93,4 +93,9 @@ export class AuthService {
   async updateProfile(userId: string, updateData: any) {
     return this.usersService.update(userId, updateData);
   }
+
+  async deleteAccount(userId: string) {
+    await this.usersService.remove(userId);
+    return { message: 'Account deleted successfully' };
+  }
 }

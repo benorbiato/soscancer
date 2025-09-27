@@ -43,7 +43,7 @@ export function EventCards({
   }
 
   return (
-    <Card className="w-full border-brand-500 dark:border-border">
+    <Card className="w-full border-muted-foreground/25 dark:border-muted-foreground/50">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

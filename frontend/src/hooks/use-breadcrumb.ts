@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { BreadcrumbItem } from '@/components/ui/breadcrumb.tsx'
+import { BreadcrumbItem } from '@/common/components/breadcrumb'
 
 export function useBreadcrumb() {
   const location = useLocation()

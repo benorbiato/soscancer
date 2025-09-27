@@ -20,7 +20,14 @@ export class UsersService {
   private loadUsers() {
     try {
       const data = fs.readFileSync(USERS_DB_PATH, 'utf8');
-      this.users = JSON.parse(data).users || [];
+      const rawUsers = JSON.parse(data).users || [];
+      // Convert snake_case to camelCase for hashedPassword field
+      this.users = rawUsers.map((user: any) => ({
+        ...user,
+        hashedPassword: user.hashed_password || user.hashedPassword,
+        createdAt: user.created_at || user.createdAt,
+        updatedAt: user.updated_at || user.updatedAt,
+      }));
     } catch (error) {
       if (error.code === 'ENOENT') {
         console.warn('users.json not found, initializing with empty array.');
@@ -39,7 +46,14 @@ export class UsersService {
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
-    fs.writeFileSync(USERS_DB_PATH, JSON.stringify({ users: this.users }, null, 2), 'utf8');
+    // Convert camelCase to snake_case for saving
+    const usersToSave = this.users.map((user: any) => ({
+      ...user,
+      hashed_password: user.hashedPassword,
+      created_at: user.createdAt,
+      updated_at: user.updatedAt,
+    }));
+    fs.writeFileSync(USERS_DB_PATH, JSON.stringify({ users: usersToSave }, null, 2), 'utf8');
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {

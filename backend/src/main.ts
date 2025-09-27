@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-const helmet = require('helmet');
-const compression = require('compression');
-const rateLimit = require('express-rate-limit');
+import helmet from 'helmet';
+import * as compression from 'compression';
+import rateLimit from 'express-rate-limit';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
@@ -30,13 +30,35 @@ async function bootstrap() {
     })
   );
 
-  // CORS
-  app.enableCors({
-    origin: configService.get('ALLOWED_ORIGINS', ['http://localhost:3000', 'http://localhost:5173']),
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  // CORS personalizado para evitar múltiplos valores
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    
+    // Remover headers CORS existentes para evitar conflitos
+    res.removeHeader('Access-Control-Allow-Origin');
+    res.removeHeader('Access-Control-Allow-Credentials');
+    res.removeHeader('Access-Control-Allow-Methods');
+    res.removeHeader('Access-Control-Allow-Headers');
+    
+    // Permitir apenas origens específicas
+    if (origin === 'http://localhost:5173' || origin === 'http://localhost:3000' || origin === 'http://localhost:5174') {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+    
+    next();
   });
+
+  // Desabilitar CORS do NestJS para evitar conflitos
+  // app.enableCors(false); // Comentado para evitar erro de TypeScript
 
   // Global validation pipe
   app.useGlobalPipes(
@@ -66,20 +88,8 @@ async function bootstrap() {
     SwaggerModule.setup('docs', app, document);
   }
 
-  // Servir arquivos estáticos do frontend (apenas se SERVE_FRONTEND não for 'false')
-  if (configService.get('NODE_ENV') === 'production' && configService.get('SERVE_FRONTEND') !== 'false') {
-    const express = require('express');
-    app.use(express.static(join(__dirname, '../../frontend/dist')));
-    
-    // Fallback para SPA - todas as rotas não-API servem o index.html
-    app.use('*', (req: any, res: any) => {
-      if (!req.path.startsWith('/api/')) {
-        res.sendFile(join(__dirname, '../../frontend/dist/index.html'));
-      }
-    });
-  }
 
-  const port = configService.get('PORT', 3000);
+  const port = configService.get('PORT', 8000);
   await app.listen(port, '0.0.0.0');
   
   console.log(`🚀 Application is running on: http://0.0.0.0:${port}`);

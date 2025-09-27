@@ -3,7 +3,7 @@ import { ChevronRight, Home } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 
-interface BreadcrumbItem {
+export interface BreadcrumbItem {
   label: string
   href?: string
   isActive?: boolean

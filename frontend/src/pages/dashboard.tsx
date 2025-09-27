@@ -21,13 +21,13 @@ function DashboardView() {
   return (
     <ProtectedRoute requiredPermission={Permission.VIEW_DASHBOARD}>
       <MainLayout>
-        <div className="mb-8 px-4">
+        <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
             Olá, {user?.name || user?.email || 'Usuário'}
           </h1>
           <p className="text-muted-foreground mt-2">{t('welcome.subtitle')}</p>
         </div>
-        <div className="px-4 space-y-8 pb-8">
+        <div className="space-y-8">
           {/* Seção de Ações Rápidas */}
           <QuickActions actions={state.quickActions as any} />
 

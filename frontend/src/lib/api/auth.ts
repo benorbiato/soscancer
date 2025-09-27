@@ -40,3 +40,9 @@ export async function logoutUser(): Promise<void> {
     method: 'POST',
   })
 }
+
+export async function deleteAccount(): Promise<{ message: string }> {
+  return apiFetch('/api/v1/auth/profile', {
+    method: 'DELETE',
+  })
+}

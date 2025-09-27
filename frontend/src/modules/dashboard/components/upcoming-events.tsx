@@ -76,7 +76,7 @@ function UpcomingEvents({ events }: UpcomingEventsProps) {
 
   if (events.length === 0) {
     return (
-      <Card className="mb-8">
+      <Card className="mb-8 dashboard-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />

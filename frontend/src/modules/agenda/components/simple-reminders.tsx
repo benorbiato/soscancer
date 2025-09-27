@@ -52,7 +52,7 @@ export function SimpleReminders({
   }
 
   return (
-    <Card className="w-full border-brand-500 dark:border-border">
+    <Card className="w-full border-muted-foreground/25 dark:border-muted-foreground/50">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">{t('events')}</CardTitle>

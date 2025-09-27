@@ -66,7 +66,7 @@ export function AgendaDatepicker({
   }
 
   return (
-    <Card className="w-full border-brand-500 dark:border-border">
+    <Card className="w-full border-muted-foreground/25 dark:border-muted-foreground/50">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2">
           <Calendar className="h-5 w-5" />

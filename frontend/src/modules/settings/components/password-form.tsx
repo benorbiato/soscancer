@@ -27,7 +27,7 @@ export function PasswordForm({
   onUpdatePassword,
 }: PasswordFormProps) {
   return (
-    <Card className="w-full border-brand-500 dark:border-border">
+    <Card className="w-full border-muted-foreground/25 dark:border-muted-foreground/50">
       <CardHeader className="space-y-1.5">
         <CardTitle className="flex items-center gap-2">
           <Lock className="h-5 w-5" />
@@ -112,7 +112,7 @@ export function PasswordForm({
           disabled={isLoading || !formData.currentPassword || !formData.newPassword}
           variant="outline"
           size="default"
-          className="border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400"
+          className="border-muted-foreground/25 dark:border-muted-foreground/50 text-foreground hover:bg-muted"
         >
           {isLoading ? 'Atualizando...' : 'Alterar Senha'}
         </Button>

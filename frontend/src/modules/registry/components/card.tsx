@@ -15,7 +15,7 @@ export function RegisterCard() {
   const { t } = useTranslation(registry)
 
   return (
-    <Card className="w-full max-w-sm border-brand-500 dark:border-border">
+    <Card className="w-full max-w-sm border-muted-foreground/25 dark:border-muted-foreground/50">
       <CardHeader>
         <CardTitle>{t('title')}</CardTitle>
         <CardDescription>{t('subtitle')}</CardDescription>

@@ -8,9 +8,10 @@ import { useToast } from '@/hooks/use-toast'
 
 interface DeleteAccountFormProps {
   isLoading: boolean
+  onDeleteAccount: () => Promise<void>
 }
 
-export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
+export function DeleteAccountForm({ isLoading, onDeleteAccount }: DeleteAccountFormProps) {
   const [confirmText, setConfirmText] = useState('')
   const [showConfirmation, setShowConfirmation] = useState(false)
   const toast = useToast()
@@ -22,12 +23,10 @@ export function DeleteAccountForm({ isLoading }: DeleteAccountFormProps) {
     }
 
     try {
-      // Aqui você implementaria a chamada para a API de exclusão
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      toast.success('Conta excluída com sucesso!')
-      // Redirecionar para login ou home
+      await onDeleteAccount()
     } catch (error) {
-      toast.error('Erro ao excluir conta', 'Tente novamente mais tarde')
+      // O erro já é tratado no hook, mas podemos adicionar logs aqui se necessário
+      console.error('Erro no componente DeleteAccountForm:', error)
     }
   }
 

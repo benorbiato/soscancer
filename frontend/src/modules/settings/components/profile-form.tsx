@@ -24,7 +24,7 @@ export function ProfileForm({
   onUpdateProfile,
 }: ProfileFormProps) {
   return (
-    <Card className="w-full border-brand-500 dark:border-border">
+    <Card className="w-full border-muted-foreground/25 dark:border-muted-foreground/50">
       <CardHeader className="space-y-1.5">
         <CardTitle className="flex items-center gap-2">
           <User className="h-5 w-5" />

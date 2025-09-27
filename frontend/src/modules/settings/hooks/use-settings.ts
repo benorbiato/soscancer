@@ -1,11 +1,12 @@
 import { useState, useCallback } from 'react'
 import { useAuth } from '@/contexts/auth-context'
 import { useToast } from '@/hooks/use-toast'
+import { deleteAccount } from '@/lib/api/auth'
 import { SettingsFormData, ProfileUpdateData, PasswordUpdateData, SettingsState } from '../types'
 import { SETTINGS_CONSTANTS } from '../constants'
 
 export function useSettings() {
-  const { user, updateUser } = useAuth()
+  const { user, updateUser, logout } = useAuth()
   const toast = useToast()
 
   const [state, setState] = useState<SettingsState>({
@@ -109,6 +110,29 @@ export function useSettings() {
     }
   }, [formData, toast])
 
+  const handleDeleteAccount = useCallback(async () => {
+    setState((prev) => ({ ...prev, isLoading: true }))
+
+    try {
+      const result = await deleteAccount()
+      toast.success('Conta excluída com sucesso!')
+      
+      // Fazer logout e redirecionar
+      logout()
+      
+      // Redirecionar para a página inicial após um pequeno delay
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 1000)
+    } catch (error: any) {
+      console.error('Erro ao excluir conta:', error)
+      const errorMessage = error?.message || 'Erro desconhecido'
+      toast.error('Erro ao excluir conta', errorMessage)
+    } finally {
+      setState((prev) => ({ ...prev, isLoading: false }))
+    }
+  }, [toast, logout])
+
   const togglePasswordVisibility = useCallback(
     (field: 'currentPassword' | 'newPassword' | 'confirmPassword') => {
       setState((prev) => ({
@@ -127,6 +151,7 @@ export function useSettings() {
     handleImageUpload,
     handleUpdateProfile,
     handleUpdatePassword,
+    handleDeleteAccount,
     togglePasswordVisibility,
   }
 }

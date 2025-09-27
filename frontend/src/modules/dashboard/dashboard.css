@@ -20,6 +20,15 @@
   border-color: rgb(226 232 240); /* slate-200 */
 }
 
+/* Bordas padronizadas para cards da dashboard */
+.dashboard-card {
+  border-color: rgb(226 232 240 / 0.25); /* muted-foreground/25 */
+}
+
+.dark .dashboard-card {
+  border-color: rgb(226 232 240 / 0.5); /* muted-foreground/50 */
+}
+
 /* Backgrounds mais limpos */
 .light .bg-muted {
   background-color: rgb(248 250 252); /* slate-50 */

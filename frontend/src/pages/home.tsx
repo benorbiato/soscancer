@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/contexts/auth-context'
 import { Button } from '@/components/ui/button.jsx'
 import { useNavigate } from 'react-router-dom'
-import { UnauthenticatedHeader } from '@/components/layouts/unauthenticated-header'
-import { AuthenticatedHeader } from '@/components/layouts/authenticated-header'
+import { MainLayout } from '@/components/layouts/main-layout'
 
 function HomeView() {
   const { t } = useTranslation()
@@ -20,9 +19,7 @@ function HomeView() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {isAuthenticated ? <AuthenticatedHeader /> : <UnauthenticatedHeader />}
-      <div className="max-w-7xl mx-auto px-4 py-16">
+    <MainLayout className="py-16">
         <div className="text-center">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-6">
             Grupo Pongaiense de Combate ao Câncer
@@ -143,8 +140,7 @@ function HomeView() {
             </p>
           </div>
         </div>
-      </div>
-    </div>
+    </MainLayout>
   )
 }
 

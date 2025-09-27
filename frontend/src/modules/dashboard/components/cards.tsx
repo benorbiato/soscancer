@@ -17,7 +17,7 @@ interface CardsProps {
 function Cards({ card }: CardsProps) {
   const { title, subtitle, url } = card
   return (
-    <Card className="w-full h-full group hover:shadow-lg transition-all duration-300 border-brand-500 dark:border-border bg-gradient-to-br from-brand-50 to-brand-100 dark:from-card dark:to-card hover:from-brand-100 hover:to-brand-200 dark:hover:from-card dark:hover:to-card flex flex-col">
+    <Card className="w-full h-full group hover:shadow-lg transition-all duration-300 border-muted-foreground/25 dark:border-muted-foreground/50 bg-gradient-to-br from-brand-50 to-brand-100 dark:from-card dark:to-card hover:from-brand-100 hover:to-brand-200 dark:hover:from-card dark:hover:to-card flex flex-col">
       <CardHeader className="pb-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">

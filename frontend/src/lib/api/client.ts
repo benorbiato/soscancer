@@ -1,4 +1,4 @@
-export const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || 'http://localhost:8000'
+export const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || 'http://localhost:5173'
 
 // Request interceptor
 function getAuthHeaders() {
@@ -118,7 +118,7 @@ export async function apiFetch<T = any>(path: string, options: RequestInit & { b
   const requestOptions: RequestInit = {
     ...options,
     method: options.method || 'GET',
-    headers: { ...defaultHeaders, ...(options.headers || {}) },
+    headers: { ...defaultHeaders, ...(options.headers || {}) } as HeadersInit,
     body: options.body ? JSON.stringify(options.body) : undefined,
   }
 
