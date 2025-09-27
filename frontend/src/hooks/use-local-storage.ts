@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T
+  initialValue: T,
 ): [T, (value: T | ((val: T) => T)) => void, () => void] {
   // Get from local storage then parse stored json or return initialValue
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -27,7 +27,7 @@ export function useLocalStorage<T>(
         console.error(`Error setting localStorage key "${key}":`, error)
       }
     },
-    [key, storedValue]
+    [key, storedValue],
   )
 
   const removeValue = useCallback(() => {

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect, ReactNode } fr
 import { AuthState, User, TokenResponse } from '@/types'
 import { loginUser, refreshToken } from '@/lib/api/auth'
 import { useToast } from '@/hooks/use-toast'
+import { Permission, PermissionChecker } from '@/lib/permissions'
 
 // Auth actions
 type AuthAction =
@@ -35,6 +36,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         id: action.payload.user_id,
         name: action.payload.user_name,
         email: action.payload.user_email,
+        role: action.payload.user_role,
       }
       return {
         ...state,
@@ -88,6 +90,12 @@ interface AuthContextType extends AuthState {
   logout: () => void
   refreshAuthToken: () => Promise<void>
   updateUser: (userData: Partial<User>) => Promise<void>
+  // Permission methods
+  hasPermission: (permission: Permission) => boolean
+  hasAnyPermission: (permissions: Permission[]) => boolean
+  hasAllPermissions: (permissions: Permission[]) => boolean
+  getPermissions: () => Permission[]
+  getAccessibleRoutes: () => string[]
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -103,29 +111,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Load auth state from localStorage on mount
   useEffect(() => {
-    // Check for the actual keys in localStorage
-    const userId = localStorage.getItem('user_id')
-    const userName = localStorage.getItem('user_name')
-    const userEmail = localStorage.getItem('user_email')
+    const storedUser = localStorage.getItem('user')
+    const accessToken = localStorage.getItem('access_token')
 
-    if (userId && userName && userEmail) {
-      const user = {
-        id: userId,
-        name: userName,
-        email: userEmail,
+    if (storedUser && accessToken) {
+      try {
+        const user = JSON.parse(storedUser)
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: {
+            access_token: accessToken,
+            refresh_token: localStorage.getItem('refresh_token') || '',
+            user_id: user.id,
+            user_name: user.name,
+            user_email: user.email,
+            user_role: user.role,
+            token_type: 'bearer',
+          },
+        })
+      } catch (error) {
+        localStorage.removeItem('user')
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        dispatch({ type: 'LOGOUT' })
       }
-      
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: {
-          access_token: 'stored_token', // We don't have the actual token stored
-          refresh_token: 'stored_refresh_token',
-          user_id: userId,
-          user_name: userName,
-          user_email: userEmail,
-          token_type: 'bearer',
-        },
-      })
     } else {
       dispatch({ type: 'LOGOUT' })
     }
@@ -137,7 +146,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       localStorage.setItem('access_token', state.token)
       localStorage.setItem('refresh_token', state.refreshToken || '')
       localStorage.setItem('user', JSON.stringify(state.user))
-    } else {
+    } else if (state.isAuthenticated === false && !state.isLoading) {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
       localStorage.removeItem('user')
@@ -146,22 +155,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (email: string, password: string) => {
     try {
+      localStorage.removeItem('user')
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      localStorage.removeItem('user_id')
+      localStorage.removeItem('user_name')
+      localStorage.removeItem('user_email')
+
       dispatch({ type: 'LOGIN_START' })
       const response = await loginUser({ email, password })
+
       dispatch({ type: 'LOGIN_SUCCESS', payload: response })
       toast.success('Login realizado com sucesso!', `Bem-vindo, ${response.user_name}`)
-      
-      // Redirect to dashboard after successful login
+
       setTimeout(() => {
-        window.location.href = '/dashboard'
-      }, 100)
+        window.location.replace('/dashboard')
+      }, 500)
     } catch (error) {
-      console.error('Login error details:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        status: (error as any)?.status,
-        data: (error as any)?.data,
-        fullError: error
-      })
       const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
       dispatch({ type: 'LOGIN_FAILURE', payload: errorMessage })
       toast.error('Erro no login', errorMessage)
@@ -170,6 +180,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   const logout = () => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('user_name')
+    localStorage.removeItem('user_email')
+
     dispatch({ type: 'LOGOUT' })
     toast.info('Logout realizado', 'Você foi desconectado com sucesso')
   }
@@ -194,7 +211,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // Aqui você implementaria a chamada para a API de atualização
       // Por enquanto, apenas atualizamos o estado local
       dispatch({ type: 'UPDATE_USER', payload: userData })
-      
+
       // Atualizar localStorage se necessário
       if (userData.name) {
         localStorage.setItem('user_name', userData.name)
@@ -202,12 +219,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (userData.email) {
         localStorage.setItem('user_email', userData.email)
       }
-      
+
       toast.success('Perfil atualizado com sucesso!')
     } catch (error) {
       toast.error('Erro ao atualizar perfil', 'Tente novamente mais tarde')
       throw error
     }
+  }
+
+  // Permission methods
+  const hasPermission = (permission: Permission): boolean => {
+    const userRole = state.user?.role || 'user'
+    return PermissionChecker.hasPermission(userRole, permission)
+  }
+
+  const hasAnyPermission = (permissions: Permission[]): boolean => {
+    const userRole = state.user?.role || 'user'
+    return PermissionChecker.hasAnyPermission(userRole, permissions)
+  }
+
+  const hasAllPermissions = (permissions: Permission[]): boolean => {
+    const userRole = state.user?.role || 'user'
+    return PermissionChecker.hasAllPermissions(userRole, permissions)
+  }
+
+  const getPermissions = (): Permission[] => {
+    const userRole = state.user?.role || 'user'
+    return PermissionChecker.getPermissionsForRole(userRole)
+  }
+
+  const getAccessibleRoutes = (): string[] => {
+    const userRole = state.user?.role || 'user'
+    return PermissionChecker.getAccessibleRoutes(userRole)
   }
 
   const value: AuthContextType = {
@@ -216,6 +259,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logout,
     refreshAuthToken,
     updateUser,
+    hasPermission,
+    hasAnyPermission,
+    hasAllPermissions,
+    getPermissions,
+    getAccessibleRoutes,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

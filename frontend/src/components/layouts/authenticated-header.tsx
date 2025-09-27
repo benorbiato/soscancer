@@ -5,6 +5,8 @@ import { useAuth } from '@/contexts/auth-context'
 import { Button } from '@/components/ui/button.jsx'
 import { Breadcrumb } from '@/components/ui/breadcrumb.tsx'
 import { useBreadcrumb } from '@/hooks/use-breadcrumb'
+import { Permission } from '@/lib/permissions'
+import { PermissionGuard } from '@/components/permission-guard'
 
 function isThemeSetToDark(): boolean {
   if (typeof window === 'undefined') return false
@@ -46,145 +48,157 @@ function AuthenticatedHeader() {
     <>
       <header className="bg-background/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link
-            to="/dashboard"
-            className="font-bold text-lg text-foreground hover:opacity-80 transition-opacity"
-          >
-            SOS Cancer
-          </Link>
-          <span className="text-sm text-muted-foreground hidden md:block">
-            Olá, {user?.name || user?.email?.split('@')[0] || 'Usuário'}
-          </span>
-        </div>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/dashboard"
+              className="font-bold text-lg text-foreground hover:opacity-80 transition-opacity"
+            >
+              SOS Cancer
+            </Link>
+            <span className="text-sm text-muted-foreground hidden md:block">
+              Olá, {user?.name || user?.email?.split('@')[0] || 'Usuário'}
+            </span>
+          </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            to="/dashboard"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Dashboard
-          </Link>
-          
-          <Link
-            to="/agenda"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Agenda
-          </Link>
-
-          <Link
-            to="/settings"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Configurações
-          </Link>
-
-          <button 
-            onClick={toggleTheme} 
-            className="flex items-center p-2 rounded-md hover:bg-muted transition-colors" 
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <Moon className="size-4 text-muted-foreground" />
-            ) : (
-              <Sun className="size-4 text-muted-foreground" />
-            )}
-          </button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleLogout}
-            className="flex items-center gap-2 border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 dark:border-brand-600 dark:text-brand-300 dark:hover:bg-brand-900 dark:hover:border-brand-500 dark:hover:text-brand-200"
-          >
-            <LogOut className="size-4" />
-            Sair
-          </Button>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-2">
-          <button 
-            onClick={toggleTheme} 
-            className="flex items-center p-2 rounded-md hover:bg-muted transition-colors" 
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <Moon className="size-4 text-muted-foreground" />
-            ) : (
-              <Sun className="size-4 text-muted-foreground" />
-            )}
-          </button>
-          
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-md hover:bg-muted transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? (
-              <X className="size-5 text-muted-foreground" />
-            ) : (
-              <Menu className="size-5 text-muted-foreground" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-sm">
-          <div className="px-4 py-4 space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/50">
-              <User className="size-4 text-muted-foreground" />
-              <span className="text-sm text-foreground">
-                Olá, {user?.name || user?.email?.split('@')[0] || 'Usuário'}
-              </span>
-            </div>
-            
-            <nav className="space-y-2">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            <PermissionGuard permission={Permission.VIEW_DASHBOARD}>
               <Link
                 to="/dashboard"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Dashboard
               </Link>
-              
+            </PermissionGuard>
+
+            <PermissionGuard permission={Permission.VIEW_AGENDA}>
               <Link
                 to="/agenda"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Agenda
               </Link>
+            </PermissionGuard>
 
+            <PermissionGuard permission={Permission.VIEW_SETTINGS}>
               <Link
                 to="/settings"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Configurações
               </Link>
-            </nav>
+            </PermissionGuard>
 
-            <div className="pt-3 border-t border-border/50">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-                className="w-full flex items-center gap-2 border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 dark:border-brand-600 dark:text-brand-300 dark:hover:bg-brand-900 dark:hover:border-brand-500 dark:hover:text-brand-200"
-              >
-                <LogOut className="size-4" />
-                Sair
-              </Button>
-            </div>
+            <button
+              onClick={toggleTheme}
+              className="flex items-center p-2 rounded-md hover:bg-muted transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDarkMode ? (
+                <Moon className="size-4 text-muted-foreground" />
+              ) : (
+                <Sun className="size-4 text-muted-foreground" />
+              )}
+            </button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="flex items-center gap-2 border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 dark:border-brand-600 dark:text-brand-300 dark:hover:bg-brand-900 dark:hover:border-brand-500 dark:hover:text-brand-200"
+            >
+              <LogOut className="size-4" />
+              Sair
+            </Button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="flex items-center p-2 rounded-md hover:bg-muted transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDarkMode ? (
+                <Moon className="size-4 text-muted-foreground" />
+              ) : (
+                <Sun className="size-4 text-muted-foreground" />
+              )}
+            </button>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-md hover:bg-muted transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="size-5 text-muted-foreground" />
+              ) : (
+                <Menu className="size-5 text-muted-foreground" />
+              )}
+            </button>
           </div>
         </div>
-      )}
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-sm">
+            <div className="px-4 py-4 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-border/50">
+                <User className="size-4 text-muted-foreground" />
+                <span className="text-sm text-foreground">
+                  Olá, {user?.name || user?.email?.split('@')[0] || 'Usuário'}
+                </span>
+              </div>
+
+              <nav className="space-y-2">
+                <PermissionGuard permission={Permission.VIEW_DASHBOARD}>
+                  <Link
+                    to="/dashboard"
+                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                </PermissionGuard>
+
+                <PermissionGuard permission={Permission.VIEW_AGENDA}>
+                  <Link
+                    to="/agenda"
+                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Agenda
+                  </Link>
+                </PermissionGuard>
+
+                <PermissionGuard permission={Permission.VIEW_SETTINGS}>
+                  <Link
+                    to="/settings"
+                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Configurações
+                  </Link>
+                </PermissionGuard>
+              </nav>
+
+              <div className="pt-3 border-t border-border/50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 border-brand-300 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 dark:border-brand-600 dark:text-brand-300 dark:hover:bg-brand-900 dark:hover:border-brand-500 dark:hover:text-brand-200"
+                >
+                  <LogOut className="size-4" />
+                  Sair
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
-      
+
       {/* Breadcrumb */}
       {breadcrumbItems.length > 0 && (
         <div className="bg-muted/30 border-b border-border/30">

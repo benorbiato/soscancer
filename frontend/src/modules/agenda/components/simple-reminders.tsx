@@ -1,105 +1,107 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Plus, Trash2, Edit2 } from 'lucide-react';
-import { Event } from '../types';
-import { formatBrazilianDate } from '@/lib/date-utils';
+import React, { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Plus, Trash2, Edit2 } from 'lucide-react'
+import { Event } from '../types'
+import { formatBrazilianDate } from '@/lib/date-utils'
+import { useTranslation } from 'react-i18next'
+import { agenda } from '@/common/locales'
 
 interface SimpleRemindersProps {
-  reminders: Event[];
-  onAddReminder: (reminder: Omit<Event, 'id'>) => void;
-  onUpdateReminder: (id: string, updates: Partial<Event>) => void;
-  onDeleteReminder: (id: string) => void;
+  reminders: Event[]
+  onAddReminder: (reminder: Omit<Event, 'id'>) => void
+  onUpdateReminder: (id: string, updates: Partial<Event>) => void
+  onDeleteReminder: (id: string) => void
 }
 
-export function SimpleReminders({ 
-  reminders, 
-  onAddReminder, 
-  onUpdateReminder, 
-  onDeleteReminder 
+export function SimpleReminders({
+  reminders,
+  onAddReminder,
+  onUpdateReminder,
+  onDeleteReminder,
 }: SimpleRemindersProps) {
-  const [isAdding, setIsAdding] = useState(false);
+  const { t } = useTranslation(agenda)
+  const [isAdding, setIsAdding] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
     date: '',
-    time: ''
-  });
+    time: '',
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     onAddReminder({
       ...formData,
       type: 'reminder',
-      status: 'scheduled'
-    });
-    
+      status: 'scheduled',
+    })
+
     setFormData({
       title: '',
       date: '',
-      time: ''
-    });
-    setIsAdding(false);
-  };
+      time: '',
+    })
+    setIsAdding(false)
+  }
 
   const formatDate = (dateString: string) => {
-    return formatBrazilianDate(dateString);
-  };
+    return formatBrazilianDate(dateString)
+  }
 
   return (
     <Card className="w-full border-brand-500 dark:border-border">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">Lembretes</CardTitle>
-          <Button
-            onClick={() => setIsAdding(true)}
-            size="sm"
-            className="h-8"
-          >
+          <CardTitle className="text-lg">{t('events')}</CardTitle>
+          <Button onClick={() => setIsAdding(true)} size="sm" className="h-8">
             <Plus className="h-4 w-4 mr-1" />
-            Novo Lembrete
+            {t('newEvent')}
           </Button>
         </div>
       </CardHeader>
       <CardContent>
         {isAdding && (
-          <form onSubmit={handleSubmit} className="space-y-4 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
+          >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Título *</label>
                 <input
                   type="text"
                   value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="Ex: Tomar medicação"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">Data *</label>
                 <input
                   type="date"
                   value={formData.date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">Horário *</label>
                 <input
                   type="time"
                   value={formData.time}
-                  onChange={(e) => setFormData(prev => ({ ...prev, time: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, time: e.target.value }))}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <Button type="submit" size="sm">
                 Criar Lembrete
@@ -135,7 +137,7 @@ export function SimpleReminders({
                     {reminder.title}
                   </h4>
                 </div>
-                
+
                 <div className="flex gap-1">
                   <Button
                     variant="ghost"
@@ -152,5 +154,5 @@ export function SimpleReminders({
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

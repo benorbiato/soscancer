@@ -45,7 +45,7 @@ function UnauthenticatedHeader() {
           >
             Login
           </Link>
-          
+
           <Link
             to="/register"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -53,9 +53,9 @@ function UnauthenticatedHeader() {
             Cadastrar
           </Link>
 
-          <button 
-            onClick={toggleTheme} 
-            className="flex items-center p-2 rounded-md hover:bg-muted transition-colors" 
+          <button
+            onClick={toggleTheme}
+            className="flex items-center p-2 rounded-md hover:bg-muted transition-colors"
             aria-label="Toggle theme"
           >
             {isDarkMode ? (

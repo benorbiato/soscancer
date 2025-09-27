@@ -1,7 +1,13 @@
 import React from 'react'
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select.tsx'
 import { BaseComponentProps } from '@/types'
 
 interface FormFieldProps extends BaseComponentProps {
@@ -71,9 +77,7 @@ export function FormField({
         {required && <span className="text-red-500 ml-1">*</span>}
       </Label>
       {renderInput()}
-      {error && (
-        <p className="text-sm text-red-500">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )
 }

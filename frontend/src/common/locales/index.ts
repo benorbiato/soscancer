@@ -6,11 +6,14 @@ import registryEn from '@/modules/registry/locales/en.json'
 import registryPt from '@/modules/registry/locales/pt.json'
 import dashboardEn from '@/modules/dashboard/locales/en.json'
 import dashboardPt from '@/modules/dashboard/locales/pt.json'
+import agendaEn from '@/modules/agenda/locales/en.json'
+import agendaPt from '@/modules/agenda/locales/pt.json'
 
 const namespaces = [
   { ns: 'auth', resources: { en: authEn, pt: authPt } },
   { ns: 'registry', resources: { en: registryEn, pt: registryPt } },
-  { ns: 'dashboard', resources: { en: dashboardEn, pt: dashboardPt } }
+  { ns: 'dashboard', resources: { en: dashboardEn, pt: dashboardPt } },
+  { ns: 'agenda', resources: { en: agendaEn, pt: agendaPt } },
 ]
 
 namespaces.forEach(({ ns, resources }) => {
@@ -23,3 +26,4 @@ namespaces.forEach(({ ns, resources }) => {
 export const auth = 'auth'
 export const registry = 'registry'
 export const dashboard = 'dashboard'
+export const agenda = 'agenda'

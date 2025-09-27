@@ -5,6 +5,8 @@ import { ToastProvider } from './components/ui/toast.jsx'
 import { HomeView, LoginView, RegisterView, DashboardView } from './pages'
 import Settings from './modules/settings'
 import Agenda from './pages/agenda'
+import { ProtectedRoute } from './components/protected-route'
+import { Permission } from './lib/permissions'
 
 function App() {
   return (
@@ -15,9 +17,30 @@ function App() {
             <Route path="/" element={<HomeView />} />
             <Route path="/login" element={<LoginView />} />
             <Route path="/register" element={<RegisterView />} />
-            <Route path="/dashboard" element={<DashboardView />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/agenda" element={<Agenda />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute requiredPermission={Permission.VIEW_DASHBOARD}>
+                  <DashboardView />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute requiredPermission={Permission.VIEW_SETTINGS}>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/agenda"
+              element={
+                <ProtectedRoute requiredPermission={Permission.VIEW_AGENDA}>
+                  <Agenda />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

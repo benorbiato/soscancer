@@ -9,7 +9,7 @@
  */
 export function createBrazilianDate(dateString: string): Date {
   // Força o horário para meio-dia (12:00) para evitar problemas de fuso horário
-  return new Date(dateString + 'T12:00:00');
+  return new Date(dateString + 'T12:00:00')
 }
 
 /**
@@ -18,12 +18,12 @@ export function createBrazilianDate(dateString: string): Date {
  * @returns String formatada no padrão brasileiro
  */
 export function formatBrazilianDate(dateString: string): string {
-  const date = createBrazilianDate(dateString);
+  const date = createBrazilianDate(dateString)
   return date.toLocaleDateString('pt-BR', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
-  });
+    year: 'numeric',
+  })
 }
 
 /**
@@ -32,13 +32,13 @@ export function formatBrazilianDate(dateString: string): string {
  * @returns String formatada no padrão brasileiro completo
  */
 export function formatBrazilianDateFull(dateString: string): string {
-  const date = createBrazilianDate(dateString);
+  const date = createBrazilianDate(dateString)
   return date.toLocaleDateString('pt-BR', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
-  });
+    day: 'numeric',
+  })
 }
 
 /**
@@ -47,13 +47,13 @@ export function formatBrazilianDateFull(dateString: string): string {
  * @returns String formatada no padrão brasileiro com dia da semana
  */
 export function formatBrazilianDateWithWeekday(dateString: string): string {
-  const date = createBrazilianDate(dateString);
+  const date = createBrazilianDate(dateString)
   return date.toLocaleDateString('pt-BR', {
     weekday: 'long',
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
-  });
+    year: 'numeric',
+  })
 }
 
 /**
@@ -61,9 +61,9 @@ export function formatBrazilianDateWithWeekday(dateString: string): string {
  * @returns String da data atual no formato YYYY-MM-DD
  */
 export function getCurrentBrazilianDate(): string {
-  const now = new Date();
-  const brazilianDate = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
-  return brazilianDate.toISOString().split('T')[0];
+  const now = new Date()
+  const brazilianDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+  return brazilianDate.toISOString().split('T')[0]
 }
 
 /**
@@ -73,7 +73,7 @@ export function getCurrentBrazilianDate(): string {
  * @returns -1 se dateString1 < dateString2, 0 se iguais, 1 se dateString1 > dateString2
  */
 export function compareBrazilianDates(dateString1: string, dateString2: string): number {
-  const date1 = createBrazilianDate(dateString1);
-  const date2 = createBrazilianDate(dateString2);
-  return date1.getTime() - date2.getTime();
+  const date1 = createBrazilianDate(dateString1)
+  const date2 = createBrazilianDate(dateString2)
+  return date1.getTime() - date2.getTime()
 }

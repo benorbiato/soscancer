@@ -41,7 +41,7 @@ def login_user(login_data: LoginRequest) -> TokenResponse:
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.id), "email": user.email},
+        data={"sub": str(user.id), "email": user.email, "name": user.name, "role": user.role},
         expires_delta=access_token_expires
     )
     
@@ -54,7 +54,8 @@ def login_user(login_data: LoginRequest) -> TokenResponse:
         refresh_token=refresh_token,
         user_id=str(user.id),
         user_name=user.name,
-        user_email=user.email
+        user_email=user.email,
+        user_role=user.role
     )
 
 
@@ -74,7 +75,7 @@ def refresh_access_token(refresh_data: RefreshTokenRequest) -> TokenResponse:
         # Create new access token
         access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
-            data={"sub": str(user.id), "email": user.email},
+            data={"sub": str(user.id), "email": user.email, "name": user.name, "role": user.role},
             expires_delta=access_token_expires
         )
         
@@ -83,7 +84,8 @@ def refresh_access_token(refresh_data: RefreshTokenRequest) -> TokenResponse:
             refresh_token=refresh_data.refresh_token,  # Keep same refresh token
             user_id=str(user.id),
             user_name=user.name,
-            user_email=user.email
+            user_email=user.email,
+            user_role=user.role
         )
         
     except Exception:

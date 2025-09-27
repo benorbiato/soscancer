@@ -1,29 +1,33 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Clock, MapPin, User } from 'lucide-react';
-import { Event } from '../types';
-import { EVENT_TYPES } from '../constants';
-import { formatBrazilianDateFull } from '@/lib/date-utils';
+import React from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Clock, MapPin, User } from 'lucide-react'
+import { Event } from '../types'
+import { EVENT_TYPES } from '../constants'
+import { formatBrazilianDateFull } from '@/lib/date-utils'
 
 interface EventCardsProps {
-  events: Event[];
-  title: string;
-  emptyMessage?: string;
+  events: Event[]
+  title: string
+  emptyMessage?: string
 }
 
-export function EventCards({ events, title, emptyMessage = 'Nenhum evento encontrado' }: EventCardsProps) {
+export function EventCards({
+  events,
+  title,
+  emptyMessage = 'Nenhum evento encontrado',
+}: EventCardsProps) {
   const formatDate = (dateString: string) => {
-    return formatBrazilianDateFull(dateString);
-  };
+    return formatBrazilianDateFull(dateString)
+  }
 
   const formatTime = (time: string) => {
-    return time;
-  };
+    return time
+  }
 
   const getEventTypeInfo = (type: Event['type']) => {
-    return EVENT_TYPES[type];
-  };
+    return EVENT_TYPES[type]
+  }
 
   if (events.length === 0) {
     return (
@@ -32,12 +36,10 @@ export function EventCards({ events, title, emptyMessage = 'Nenhum evento encont
           <CardTitle>{title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-            {emptyMessage}
-          </p>
+          <p className="text-gray-500 dark:text-gray-400 text-center py-4">{emptyMessage}</p>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -48,8 +50,8 @@ export function EventCards({ events, title, emptyMessage = 'Nenhum evento encont
       <CardContent>
         <div className="space-y-4">
           {events.map((event) => {
-            const typeInfo = getEventTypeInfo(event.type);
-            
+            const typeInfo = getEventTypeInfo(event.type)
+
             return (
               <div
                 key={event.id}
@@ -110,10 +112,10 @@ export function EventCards({ events, title, emptyMessage = 'Nenhum evento encont
                   )}
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

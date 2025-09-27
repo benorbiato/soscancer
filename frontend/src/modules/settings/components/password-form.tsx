@@ -33,18 +33,20 @@ export function PasswordForm({
           <Lock className="h-5 w-5" />
           Alterar Senha
         </CardTitle>
-        <CardDescription>
-          Para sua segurança, confirme sua senha atual
-        </CardDescription>
+        <CardDescription>Para sua segurança, confirme sua senha atual</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="currentPassword" className="text-sm font-medium">Senha Atual</Label>
+          <Label htmlFor="currentPassword" className="text-sm font-medium">
+            Senha Atual
+          </Label>
           <div className="relative">
             <Input
-              type={showCurrentPassword ? "text" : "password"}
+              type={showCurrentPassword ? 'text' : 'password'}
               value={formData.currentPassword}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('currentPassword', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onInputChange('currentPassword', e.target.value)
+              }
               placeholder="Digite sua senha atual"
             />
             <button
@@ -52,23 +54,23 @@ export function PasswordForm({
               onClick={() => onTogglePasswordVisibility('currentPassword')}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
             >
-              {showCurrentPassword ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
+              {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="newPassword" className="text-sm font-medium">Nova Senha</Label>
+            <Label htmlFor="newPassword" className="text-sm font-medium">
+              Nova Senha
+            </Label>
             <div className="relative">
               <Input
-                type={showNewPassword ? "text" : "password"}
+                type={showNewPassword ? 'text' : 'password'}
                 value={formData.newPassword}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('newPassword', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onInputChange('newPassword', e.target.value)
+                }
                 placeholder="Digite a nova senha"
               />
               <button
@@ -76,22 +78,22 @@ export function PasswordForm({
                 onClick={() => onTogglePasswordVisibility('newPassword')}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                {showNewPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
+                {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirmar Nova Senha</Label>
+            <Label htmlFor="confirmPassword" className="text-sm font-medium">
+              Confirmar Nova Senha
+            </Label>
             <div className="relative">
               <Input
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 value={formData.confirmPassword}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('confirmPassword', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onInputChange('confirmPassword', e.target.value)
+                }
                 placeholder="Confirme a nova senha"
               />
               <button
@@ -99,17 +101,13 @@ export function PasswordForm({
                 onClick={() => onTogglePasswordVisibility('confirmPassword')}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                {showConfirmPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
+                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
         </div>
 
-        <Button 
+        <Button
           onClick={onUpdatePassword}
           disabled={isLoading || !formData.currentPassword || !formData.newPassword}
           variant="outline"

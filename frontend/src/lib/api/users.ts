@@ -2,9 +2,9 @@ import { User, UserCreate, UserUpdate } from '@/types'
 import { apiFetch } from './client'
 
 export async function createUser(payload: UserCreate): Promise<User> {
-  return apiFetch('/api/v1/users/', { 
-    method: 'POST', 
-    body: payload 
+  return apiFetch('/api/v1/users/', {
+    method: 'POST',
+    body: payload,
   })
 }
 
@@ -17,15 +17,15 @@ export async function getUser(userId: string): Promise<User> {
 }
 
 export async function updateUser(userId: string, payload: UserUpdate): Promise<User> {
-  return apiFetch(`/api/v1/users/${userId}`, { 
-    method: 'PUT', 
-    body: payload 
+  return apiFetch(`/api/v1/users/${userId}`, {
+    method: 'PUT',
+    body: payload,
   })
 }
 
 export async function deleteUser(userId: string): Promise<void> {
-  return apiFetch(`/api/v1/users/${userId}`, { 
-    method: 'DELETE' 
+  return apiFetch(`/api/v1/users/${userId}`, {
+    method: 'DELETE',
   })
 }
 

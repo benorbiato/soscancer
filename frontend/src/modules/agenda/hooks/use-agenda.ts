@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Event, AgendaState } from '../types';
-import { SAMPLE_EVENTS, getUpcomingEvents, getEventsByDate, getEventDates } from '../constants';
+import { useState, useEffect, useMemo } from 'react'
+import { Event, AgendaState } from '../types'
+import { SAMPLE_EVENTS, getUpcomingEvents, getEventsByDate, getEventDates } from '../constants'
 
 export function useAgenda() {
   const [state, setState] = useState<AgendaState>({
@@ -8,68 +8,66 @@ export function useAgenda() {
     events: SAMPLE_EVENTS,
     upcomingEvents: [],
     isLoading: false,
-    error: null
-  });
+    error: null,
+  })
 
   // Separar eventos normais de lembretes
   const regularEvents = useMemo(() => {
-    return state.events.filter(event => event.type !== 'reminder');
-  }, [state.events]);
+    return state.events.filter((event) => event.type !== 'reminder')
+  }, [state.events])
 
   const reminders = useMemo(() => {
-    return state.events.filter(event => event.type === 'reminder');
-  }, [state.events]);
+    return state.events.filter((event) => event.type === 'reminder')
+  }, [state.events])
 
   // Calcular eventos futuros (todos os eventos)
   const upcomingEvents = useMemo(() => {
-    return getUpcomingEvents(state.events, 5);
-  }, [state.events]);
+    return getUpcomingEvents(state.events, 5)
+  }, [state.events])
 
   // Calcular datas com eventos (todos os eventos)
   const eventDates = useMemo(() => {
-    return getEventDates(state.events);
-  }, [state.events]);
+    return getEventDates(state.events)
+  }, [state.events])
 
   // Eventos do dia selecionado
   const selectedDateEvents = useMemo(() => {
-    if (!state.selectedDate) return [];
-    return getEventsByDate(state.events, state.selectedDate);
-  }, [state.events, state.selectedDate]);
+    if (!state.selectedDate) return []
+    return getEventsByDate(state.events, state.selectedDate)
+  }, [state.events, state.selectedDate])
 
   const selectDate = (date: string | null) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      selectedDate: date
-    }));
-  };
+      selectedDate: date,
+    }))
+  }
 
   const addEvent = (event: Omit<Event, 'id'>) => {
     const newEvent: Event = {
       ...event,
-      id: Date.now().toString()
-    };
+      id: Date.now().toString(),
+    }
 
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      events: [...prev.events, newEvent]
-    }));
-  };
+      events: [...prev.events, newEvent],
+    }))
+  }
 
   const updateEvent = (id: string, updates: Partial<Event>) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      events: prev.events.map(event =>
-        event.id === id ? { ...event, ...updates } : event
-      )
-    }));
-  };
+      events: prev.events.map((event) => (event.id === id ? { ...event, ...updates } : event)),
+    }))
+  }
 
   const deleteEvent = (id: string) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      events: prev.events.filter(event => event.id !== id)
-    }));
-  };
+      events: prev.events.filter((event) => event.id !== id),
+    }))
+  }
 
   // Funções específicas para lembretes
   const addReminder = (reminder: Omit<Event, 'id'>) => {
@@ -77,30 +75,28 @@ export function useAgenda() {
       ...reminder,
       id: Date.now().toString(),
       type: 'reminder',
-      status: 'scheduled'
-    };
+      status: 'scheduled',
+    }
 
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      events: [...prev.events, newReminder]
-    }));
-  };
+      events: [...prev.events, newReminder],
+    }))
+  }
 
   const updateReminder = (id: string, updates: Partial<Event>) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      events: prev.events.map(event =>
-        event.id === id ? { ...event, ...updates } : event
-      )
-    }));
-  };
+      events: prev.events.map((event) => (event.id === id ? { ...event, ...updates } : event)),
+    }))
+  }
 
   const deleteReminder = (id: string) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      events: prev.events.filter(event => event.id !== id)
-    }));
-  };
+      events: prev.events.filter((event) => event.id !== id),
+    }))
+  }
 
   return {
     state: {
@@ -109,7 +105,7 @@ export function useAgenda() {
       eventDates,
       selectedDateEvents,
       regularEvents,
-      reminders
+      reminders,
     },
     selectDate,
     addEvent,
@@ -117,6 +113,6 @@ export function useAgenda() {
     deleteEvent,
     addReminder,
     updateReminder,
-    deleteReminder
-  };
+    deleteReminder,
+  }
 }
